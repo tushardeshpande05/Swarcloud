@@ -344,4 +344,2682 @@
           <span>Cloud Playlists</span>
           <span class="text-[10px] text-indigo-400 font-normal">&bull; Curated & Custom</span>
         </h2>
+        <div class="flex items-center gap-2">
+          <span id="active-playlist-label" class="text-xs text-indigo-400 font-medium">All Songs</span>
+          <button 
+            id="share-active-playlist-btn" 
+            type="button" 
+            class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 text-[11px] font-semibold transition-all"
+          >
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+            </svg>
+            Share Playlist
+          </button>
+        </div>
+      </div>
+      <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-none" id="playlist-tabs">
+        <button type="button" data-playlist="all" class="playlist-pill active shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all bg-indigo-600 text-white shadow-sm">
+          🔥 All Hits
+        </button>
+        <button type="button" data-playlist="most-searched" class="playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+          🚀 Most Searched
+        </button>
+        <button type="button" data-playlist="golden-era" class="playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+          📻 Golden Era (60s–80s)
+        </button>
+        <button type="button" data-playlist="90s-magic" class="playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+          ✨ 90s Romance
+        </button>
+        <button type="button" data-playlist="2000s-classics" class="playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+          🎸 2000s Nostalgia
+        </button>
+        <button type="button" data-playlist="modern-chartbusters" class="playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800">
+          🎧 Modern Top Hits
+        </button>
+        <button type="button" data-playlist="favorites" class="playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-rose-500 fill-current" viewBox="0 0 20 20">
+            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+          </svg>
+          Favorites (<span id="fav-counter">0</span>)
+        </button>
+        <span id="custom-playlist-pills" class="flex gap-2"></span>
+      </div>
+    </section>
+
+    <!-- Search & Multi-Filter Control Center -->
+    <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 mb-8 shadow-xl">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        
+        <!-- Search bar -->
+        <div class="md:col-span-1">
+          <label for="search-input" class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Search Tracks</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Song, singer, actor, movie..." 
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 pl-9 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            >
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Filter: Singer -->
+        <div>
+          <label for="filter-singer" class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Filter by Singer</label>
+          <select 
+            id="filter-singer" 
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="all">All Singers</option>
+          </select>
+        </div>
+
+        <!-- Filter: Actor -->
+        <div>
+          <label for="filter-actor" class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Filter by Actor / Star</label>
+          <select 
+            id="filter-actor" 
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="all">All Actors</option>
+          </select>
+        </div>
+
+        <!-- Filter: Era / Year -->
+        <div>
+          <label for="filter-year" class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Filter by Era / Year</label>
+          <select 
+            id="filter-year" 
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="all">All Eras & Decades</option>
+            <option value="2020s">2020s (Current Chartbusters)</option>
+            <option value="2010s">2010s (Modern Era)</option>
+            <option value="2000s">2000s (New Millennium Hits)</option>
+            <option value="1990s">1990s (Golden 90s Romance)</option>
+            <option value="1980s">1980s (Retro Grooves)</option>
+            <option value="1970s">1970s & Earlier (Evergreen Classics)</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Active Filter Status & Reset -->
+      <div class="mt-4 pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center gap-2 text-slate-300">
+          <span>Showing: <strong id="filter-count" class="text-indigo-400 font-bold">0</strong> songs</span>
+          <span id="active-filter-chips" class="flex flex-wrap gap-1.5 ml-2"></span>
+        </div>
+        <button 
+          id="reset-filters-btn" 
+          type="button" 
+          class="text-xs text-slate-400 hover:text-white underline underline-offset-4 transition-colors"
+        >
+          Reset all filters
+        </button>
+      </div>
+    </section>
+
+    <!-- Song Collection Catalog -->
+    <section>
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden text-center py-16 px-4 bg-slate-900/40 rounded-2xl border border-dashed border-slate-800">
+        <div class="w-12 h-12 rounded-full bg-slate-900 text-slate-400 flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-sm font-semibold text-white">No matching songs found</h3>
+        <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Try clearing your filters or selecting another mood.</p>
+        <button 
+          id="clear-search-btn" 
+          type="button" 
+          class="mt-4 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition-all"
+        >
+          Clear Filters & Search
+        </button>
+      </div>
+
+      <!-- Songs Container (Preserves id="song-list") -->
+      <ul id="song-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></ul>
+    </section>
+
+  </main>
+
+  <!-- Sticky Bottom Cloud Stream Player Bar (Upgraded Independent Audio Deck) -->
+  <div id="now-playing-bar" class="fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800 py-3 px-4 sm:px-8 shadow-2xl transition-transform duration-300 translate-y-full">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
       
+      <!-- Track Meta -->
+      <div class="flex items-center gap-3 min-w-0 w-full sm:w-1/3">
+        <div id="player-art" class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+          <div class="flex items-end gap-0.5 h-4">
+            <span class="w-1 bg-indigo-400 rounded-full eq-bar-1"></span>
+            <span class="w-1 bg-indigo-400 rounded-full eq-bar-2"></span>
+            <span class="w-1 bg-indigo-400 rounded-full eq-bar-3"></span>
+            <span class="w-1 bg-indigo-400 rounded-full eq-bar-4"></span>
+          </div>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-1.5">
+            <h4 id="player-title" class="text-xs sm:text-sm font-bold text-white truncate">Select a track to stream</h4>
+            <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 shrink-0">SWAR HI-FI</span>
+          </div>
+          <p id="player-artist" class="text-[11px] text-slate-400 truncate">Cloud buffer &bull; Zero device storage used</p>
+        </div>
+      </div>
+
+      <!-- Scrubber & Playback Controls with Prev/Next, Shuffle & Repeat -->
+      <div class="flex flex-col items-center gap-1.5 w-full sm:w-1/3">
+        <div class="flex items-center gap-2">
+          
+          <!-- Shuffle Button -->
+          <button 
+            id="player-shuffle-btn" 
+            type="button" 
+            class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+            title="Toggle Shuffle"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H4V4h4m8 12h4v-4m0-4V4h-4m-6 8l8 8m0-16L4 20"></path>
+            </svg>
+          </button>
+
+          <!-- Previous Track Button -->
+          <button 
+            id="player-prev-btn" 
+            type="button" 
+            class="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
+            title="Previous Track"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+            </svg>
+          </button>
+
+          <!-- Play / Pause Main Button -->
+          <button 
+            id="player-toggle-btn" 
+            type="button" 
+            class="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 active:bg-indigo-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-indigo-600/30 transition-all"
+          >
+            <span id="player-toggle-label">Pause</span>
+          </button>
+
+          <!-- Next Track Button -->
+          <button 
+            id="player-next-btn" 
+            type="button" 
+            class="p-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
+            title="Next Track"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+            </svg>
+          </button>
+
+          <!-- Repeat Button -->
+          <button 
+            id="player-repeat-btn" 
+            type="button" 
+            class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+            title="Repeat Mode (Off / All / One)"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </button>
+
+          <!-- Stop Button -->
+          <button 
+            id="player-stop-btn" 
+            type="button"
+            class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors ml-1"
+            title="Stop playback"
+          >
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <rect x="6" y="6" width="12" height="12" rx="2" />
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Live Stream Audio Scrubber Progress -->
+        <div class="w-full flex items-center gap-2">
+          <span id="player-current-time" class="text-[10px] text-slate-400 font-mono">0:00</span>
+          <div class="relative flex-1 flex items-center">
+            <input 
+              type="range" 
+              id="player-progress" 
+              min="0" 
+              max="100" 
+              value="0" 
+              class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer"
+            >
+          </div>
+          <span id="player-duration" class="text-[10px] text-slate-400 font-mono">0:30</span>
+        </div>
+      </div>
+
+      <!-- Native Sound Deck & Sing-Along (100% Brand-Owned, No Third-Party Logos) -->
+      <div class="flex items-center justify-end gap-2 w-full sm:w-1/3">
+        
+        <!-- Lyrics Button in Player -->
+        <button 
+          id="player-lyrics-btn" 
+          type="button" 
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-pink-600/20 to-indigo-600/20 hover:from-pink-600/30 hover:to-indigo-600/30 text-pink-300 border border-pink-500/30 text-[11px] font-semibold transition-colors"
+          title="Sing along to karaoke lyrics"
+        >
+          <span>🎤</span> Sing Mode
+        </button>
+
+        <!-- Speed Dial -->
+        <select 
+          id="playback-speed-select" 
+          class="bg-slate-900 border border-slate-800 rounded-xl px-2 py-1.5 text-[11px] text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          title="Playback Tempo / Speed"
+        >
+          <option value="1">1.0x Normal</option>
+          <option value="0.8">0.8x Relax</option>
+          <option value="1.25">1.25x Upbeat</option>
+        </select>
+
+        <!-- Sound EQ Selector -->
+        <select 
+          id="sound-eq-select" 
+          class="bg-slate-900 border border-slate-800 rounded-xl px-2 py-1.5 text-[11px] text-amber-300 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          title="Sound Equalizer Preset"
+        >
+          <option value="balanced">🎛️ EQ: Balanced</option>
+          <option value="bass">🔊 EQ: Bass Boost</option>
+          <option value="vocal">🎙️ EQ: Vocal Warmth</option>
+          <option value="acoustic">🎻 EQ: Acoustic</option>
+        </select>
+
+        <!-- Preserved IDs for check compatibility without showing 3rd party brands -->
+        <a id="ytm-link" href="#" class="hidden"></a>
+        <a id="spotify-link" href="#" class="hidden"></a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Sing-Along Karaoke Modal with Dual Script (English + Devanagari) -->
+  <div id="lyrics-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-xl flex items-center justify-center p-4 hidden">
+    <div class="bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-indigo-500/40 rounded-3xl w-full max-w-lg p-6 shadow-2xl relative text-center">
+      
+      <div class="flex items-center justify-between mb-4 border-b border-slate-800 pb-3">
+        <div class="text-left">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-pink-400 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/20">Sing-Along Studio</span>
+            <span id="script-toggle-badge" class="text-[10px] text-slate-400 font-mono">EN / हिंदी</span>
+          </div>
+          <h3 id="lyrics-modal-title" class="text-lg font-bold text-white truncate">Song Title</h3>
+          <p id="lyrics-modal-artist" class="text-xs text-slate-400 truncate">Singer &bull; Movie</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="toggle-script-btn" type="button" class="text-xs font-semibold px-2.5 py-1 rounded-xl bg-slate-800 text-amber-300 border border-slate-700 hover:bg-slate-700 transition-colors">
+            Devanagari
+          </button>
+          <button id="close-lyrics-modal-btn" type="button" class="text-slate-400 hover:text-white p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Karaoke Display Card -->
+      <div class="py-6 px-4 bg-slate-950/80 rounded-2xl border border-indigo-500/20 mb-5 relative overflow-hidden">
+        <div class="w-10 h-10 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center mx-auto mb-3">
+          <span class="text-lg">🎤</span>
+        </div>
+        <blockquote id="lyrics-modal-body" class="text-base sm:text-lg font-medium text-slate-100 leading-relaxed italic whitespace-pre-line tracking-wide">
+          Loading lyrics...
+        </blockquote>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex items-center justify-center gap-3">
+        <button 
+          id="lyrics-play-sync-btn" 
+          type="button" 
+          class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center gap-2 shadow-lg shadow-indigo-600/30 transition-all"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span id="lyrics-sync-label">Stream & Sing</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Custom Playlist Modal -->
+  <div id="playlist-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-sm p-5 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>Create Cloud Playlist</span>
+        </h3>
+        <button id="close-playlist-modal-btn" type="button" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <form id="create-playlist-form" class="space-y-3">
+        <div>
+          <label for="custom-playlist-name" class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Playlist Name *</label>
+          <input 
+            type="text" 
+            id="custom-playlist-name" 
+            required 
+            placeholder="e.g. Pune Monsoon Drives, Workout Beats" 
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          >
+        </div>
+        <div>
+          <label for="custom-playlist-emoji" class="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Playlist Icon / Emoji</label>
+          <select 
+            id="custom-playlist-emoji" 
+            class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          >
+            <option value="🌧️">🌧️ Monsoon & Chai</option>
+            <option value="🚗">🚗 Highway Long Drive</option>
+            <option value="⚡">⚡ High Energy Workout</option>
+            <option value="🌙">🌙 Sukoon / Late Night</option>
+            <option value="🚩">🚩 अस्सल मराठी (Marathi Vibes)</option>
+            <option value="🎉">🎉 Party / Baaraat</option>
+          </select>
+        </div>
+        <div class="pt-2 flex gap-2">
+          <button type="button" id="cancel-playlist-modal-btn" class="flex-1 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition-all">Cancel</button>
+          <button type="submit" class="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white shadow-lg shadow-indigo-600/30 transition-all">Create Playlist</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Track to Custom Playlist Selection Modal -->
+  <div id="add-to-playlist-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-sm p-5 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="text-sm font-bold text-white">Add to Playlist</h3>
+          <p id="target-song-title-label" class="text-xs text-indigo-400 font-semibold truncate"></p>
+        </div>
+        <button id="close-add-to-playlist-btn" type="button" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div id="custom-playlists-selector-list" class="space-y-2 my-4 max-h-56 overflow-y-auto pr-1"></div>
+      <p id="no-custom-playlists-msg" class="hidden text-xs text-slate-400 text-center py-4">No custom playlists yet. Create one with the "+ New Playlist" button at the top!</p>
+      <button type="button" id="done-add-to-playlist-btn" class="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white transition-all">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Share / Export Playlist Modal -->
+  <div id="share-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-5 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="text-sm font-bold text-white">Share SwarCloud Playlist</h3>
+          <p id="share-playlist-name" class="text-xs text-indigo-400 font-semibold"></p>
+        </div>
+        <button id="close-share-modal-btn" type="button" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <p class="text-[11px] text-slate-300 mb-2">Here is the formatted tracklist you can copy or send directly to friends:</p>
+      <textarea 
+        id="share-text-area" 
+        readonly 
+        rows="8" 
+        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 font-mono focus:outline-none mb-3 resize-none select-all"
+      ></textarea>
+      <div class="flex gap-2">
+        <button type="button" id="copy-share-btn" class="flex-1 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-semibold text-white flex items-center justify-center gap-1.5 shadow-md shadow-indigo-600/30 transition-all">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+          </svg>
+          <span id="copy-btn-text">Copy Tracklist</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 1. ALL-TIME HIT SONGS DATABASE WITH MASTER YOUTUBE STREAM IDS
+    const INITIAL_SONGS = [
+  {
+    "id": 1,
+    "title": "Kesariya",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2022,
+    "movie": "Brahmāstra",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "BddP6PYo2gs",
+    "lyricsEn": "Kesariya tera ishq hai piya\nRang jaaun jo main haath lagaaun\nDin beete saara teri fikr mein\nRain saari teri khair manaun...",
+    "lyricsHi": "केसरिया तेरा इश्क़ है पिया\nरंग जाऊं जो मैं हाथ लगाऊं\nदिन बीते सारा तेरी फ़िक्र में\nरैन सारी तेरी खैर मनाऊं..."
+  },
+  {
+    "id": 2,
+    "title": "Tum Hi Ho",
+    "singer": "Arijit Singh",
+    "actor": "Aditya Roy Kapur",
+    "year": 2013,
+    "movie": "Aashiqui 2",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "Umqb9KENgmk",
+    "lyricsEn": "Hum tere bin ab reh nahi sakte\nTere bina kya wajood mera...\nKyunki tum hi ho, ab tum hi ho\nZindagi ab tum hi ho!",
+    "lyricsHi": "हम तेरे बिन अब रह नहीं सकते\nतेरे बिना क्या वजूद मेरा...\nक्योंकि तुम ही हो, अब तुम ही हो\nज़िंदगी अब तुम ही हो!"
+  },
+  {
+    "id": 3,
+    "title": "Chaleya",
+    "singer": "Arijit Singh & Shilpa Rao",
+    "actor": "Shah Rukh Khan",
+    "year": 2023,
+    "movie": "Jawan",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "VAdGW7QDJUI",
+    "lyricsEn": "Ishq mein dil bana hai, ishq mein dil fana hai\nChaleya teri ore, chaleya teri ore...",
+    "lyricsHi": "इश्क़ में दिल बना है, इश्क़ में दिल फना है\nचलेया तेरी ओर, चलेया तेरी ओर..."
+  },
+  {
+    "id": 4,
+    "title": "Apna Bana Le",
+    "singer": "Arijit Singh",
+    "actor": "Varun Dhawan",
+    "year": 2022,
+    "movie": "Bhediya",
+    "searches": 97,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "ElZfdU54Cp8",
+    "lyricsEn": "Tu mera koi na hoke bhi kuch laage\nKiya re jo bhi toone, kaise kiya re\nApna bana le piya, apna bana le...",
+    "lyricsHi": "तू मेरा कोई ना होके भी कुछ लागे\nकिया रे जो भी तूने कैसे किया रे\nअपना बना ले पिया अपना बना ले..."
+  },
+  {
+    "id": 5,
+    "title": "O Maahi",
+    "singer": "Arijit Singh",
+    "actor": "Shah Rukh Khan",
+    "year": 2023,
+    "movie": "Dunki",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "kC4pA0x5X7M",
+    "lyricsEn": "O maahi o maahi, tere ishq mein behta jaaun\nTu dhoop hai meri, tu chhaanv hai meri...",
+    "lyricsHi": "ओ माही ओ माही, तेरे इश्क़ में बहता जाऊं\nतू धूप है मेरी, तू छांव है मेरी..."
+  },
+  {
+    "id": 6,
+    "title": "Raataan Lambiyan",
+    "singer": "Jubin Nautiyal & Asees Kaur",
+    "actor": "Sidharth Malhotra",
+    "year": 2021,
+    "movie": "Shershaah",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "gvyUuxdRdR4",
+    "lyricsEn": "Kaate kate na re raataan lambiyan lambiyan re\nKare ghamzada meri aankhon ko...",
+    "lyricsHi": "काटे कटे ना रे रातां लम्बियाँ लम्बियाँ रे\nकरे ग़मज़दा मेरी आँखों को..."
+  },
+  {
+    "id": 7,
+    "title": "Channa Mereya",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2016,
+    "movie": "Ae Dil Hai Mushkil",
+    "searches": 97,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "284Ov7ysmfA",
+    "lyricsEn": "Acha chalta hoon, duaon mein yaad rakhna\nMere zikr ka zubaan pe swaad rakhna\nAndhera tera maine le liya\nMera ujla sitaara tere naam kiya...",
+    "lyricsHi": "अच्छा चलता हूँ दुआओं में याद रखना\nमेरे ज़िक्र का ज़ुबाँ पे स्वाद रखना..."
+  },
+  {
+    "id": 8,
+    "title": "Dil Diyan Gallan",
+    "singer": "Atif Aslam",
+    "actor": "Salman Khan",
+    "year": 2017,
+    "movie": "Tiger Zinda Hai",
+    "searches": 92,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "mevO4I0f5lg",
+    "lyricsEn": "Dil diyan gallan karange naal naal behke\nAkh naale akh nu milaake...",
+    "lyricsHi": "दिल दियाँ गल्लां करांगे नाल नाल बहके\nअख नाले अख नु मिलाके..."
+  },
+  {
+    "id": 9,
+    "title": "Agar Tum Saath Ho",
+    "singer": "Alka Yagnik & Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2015,
+    "movie": "Tamasha",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "sK7riqg2mr4",
+    "lyricsEn": "Pal bhar thehar jaao, dil yeh sambhal jaaye\nKaise tumhe roka karoon\nAgar tum saath ho...",
+    "lyricsHi": "पल भर ठहर जाओ दिल ये संभल जाए\nकैसे तुम्हें रोका करूँ\nअगर तुम साथ हो..."
+  },
+  {
+    "id": 10,
+    "title": "Ghungroo",
+    "singer": "Arijit Singh & Shilpa Rao",
+    "actor": "Hrithik Roshan",
+    "year": 2019,
+    "movie": "War",
+    "searches": 91,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "baaraat",
+    "ytId": "qFkNATtc3mc",
+    "lyricsEn": "Kyun lamhe kharaab karein, aa galti behisaab karein\nGhungroo toot gaye, naachungi main poori raat!",
+    "lyricsHi": "क्यों लम्हे खराब करें, आ गलती बेहिसाब करें\nघुँघरू टूट गए, नाचूँगी मैं पूरी रात!"
+  },
+  {
+    "id": 11,
+    "title": "Senorita",
+    "singer": "Farhan Akhtar & Hrithik Roshan",
+    "actor": "Hrithik Roshan",
+    "year": 2011,
+    "movie": "ZNMD",
+    "searches": 89,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "8mSUD7zWda4",
+    "lyricsEn": "Kaisi hai yeh rut ke jisme phool banke khil rahi hai zindagani\nSenorita, jo bhi pal beetein hain unhein jee lo khul ke...",
+    "lyricsHi": "कैसी है ये रुत के जिसमें फूल बनके खिल रही है ज़िंदगानी..."
+  },
+  {
+    "id": 12,
+    "title": "Teri Mitti",
+    "singer": "B Praak",
+    "actor": "Akshay Kumar",
+    "year": 2019,
+    "movie": "Kesari",
+    "searches": 95,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "wF_B_aagLfI",
+    "lyricsEn": "Teri mitti mein mil jaawaan, gul banke main khil jaawaan\nItni si hai dil ki aarzoo...",
+    "lyricsHi": "तेरी मिट्टी में मिल जावां, गुल बनके मैं खिल जावां..."
+  },
+  {
+    "id": 13,
+    "title": "Heeriye",
+    "singer": "Jasleen Royal & Arijit Singh",
+    "actor": "Dulquer Salmaan",
+    "year": 2023,
+    "movie": "Single",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "RLzC55ai0eo",
+    "lyricsEn": "Heeriye heeriye aa, heeriye heeriye aa\nTeri hoke mar jaaniye...",
+    "lyricsHi": "हीरीये हीरीये आ, हीरीये हीरीये आ\nतेरी होके मर जाणिये..."
+  },
+  {
+    "id": 14,
+    "title": "Kabira",
+    "singer": "Tochi Raina & Rekha Bhardwaj",
+    "actor": "Ranbir Kapoor",
+    "year": 2013,
+    "movie": "YJHD",
+    "searches": 94,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "jHNNMj5bNQw",
+    "lyricsEn": "Bann re kabira maan jaa, re kabira re\nKya paayega tu baawara hoke...",
+    "lyricsHi": "बन रे कबीरा मान जा, रे कबीरा रे..."
+  },
+  {
+    "id": 15,
+    "title": "Ilahi",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2013,
+    "movie": "YJHD",
+    "searches": 93,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "fdubeMFwuGs",
+    "lyricsEn": "Shaamein malang si, raatein surang si\nIlahi mera jee aaye aaye...",
+    "lyricsHi": "शामें मलंग सी, रातें सुरंग सी\nइलाही मेरा जी आए आए..."
+  },
+  {
+    "id": 16,
+    "title": "Aankh Marey",
+    "singer": "Neha Kakkar & Mika Singh",
+    "actor": "Ranveer Singh",
+    "year": 2018,
+    "movie": "Simmba",
+    "searches": 88,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "_KhQT-LGb-4",
+    "lyricsEn": "Ho ladki aankh marey, aankh marey!\nSeeti bajaye, beech sadak pe...",
+    "lyricsHi": "हो लड़की आँख मारे, आँख मारे!\nसीटी बजाए बीच सड़क पे..."
+  },
+  {
+    "id": 17,
+    "title": "Param Sundari",
+    "singer": "Shreya Ghoshal & A.R. Rahman",
+    "actor": "Kriti Sanon",
+    "year": 2021,
+    "movie": "Mimi",
+    "searches": 92,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "nfNc0XJdZ98",
+    "lyricsEn": "Bitiya tu to baadi soni hai re\nChali matak matak param sundari...",
+    "lyricsHi": "बिटिया तू तो बड़ी सोणी है रे\nचली मटक मटक परम सुंदरी..."
+  },
+  {
+    "id": 18,
+    "title": "Shayad",
+    "singer": "Arijit Singh",
+    "actor": "Kartik Aaryan",
+    "year": 2020,
+    "movie": "Love Aaj Kal",
+    "searches": 94,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "UbsbU8q_r78",
+    "lyricsEn": "Shayad kabhi na keh sakoon main tumko\nKahe bina samajh lo tum shayad...",
+    "lyricsHi": "शायद कभी ना कह सकूँ मैं तुमको\nकहे बिना समझ लो तुम शायद..."
+  },
+  {
+    "id": 19,
+    "title": "Deva Deva",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2022,
+    "movie": "Brahmāstra",
+    "searches": 93,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "mNuhKUOD_A0",
+    "lyricsEn": "Chingariyan yeh jo mere seene mein hain dafan\nInko hawa deke kar doon aazad main agan\nOm deva deva...",
+    "lyricsHi": "चिंगारियाँ ये जो मेरे सीने में हैं दफ़न..."
+  },
+  {
+    "id": 20,
+    "title": "Tauba Tauba",
+    "singer": "Karan Aujla",
+    "actor": "Vicky Kaushal",
+    "year": 2024,
+    "movie": "Bad Newz",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "LK7-_dgAVQE",
+    "lyricsEn": "Husn tera tauba tauba, nakhra tera tauba tauba\nFloor pe laave aag...",
+    "lyricsHi": "हुस्न तेरा तौबा तौबा, नखरा तेरा तौबा तौबा..."
+  },
+  {
+    "id": 21,
+    "title": "Kal Ho Naa Ho",
+    "singer": "Sonu Nigam",
+    "actor": "Shah Rukh Khan",
+    "year": 2003,
+    "movie": "Kal Ho Naa Ho",
+    "searches": 95,
+    "playlist": [
+      "most-searched",
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "g0eO74UmRBs",
+    "lyricsEn": "Har ghadi badal rahi hai roop zindagi\nChhaanv hai kabhi kabhi hai dhoop zindagi\nHar pal yahan jee bhar jiyo\nJo hai samaa, kal ho naa ho!",
+    "lyricsHi": "हर घड़ी बदल रही है रूप ज़िंदगी..."
+  },
+  {
+    "id": 22,
+    "title": "Zara Sa",
+    "singer": "KK",
+    "actor": "Emraan Hashmi",
+    "year": 2008,
+    "movie": "Jannat",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "iW_8v0Y3230",
+    "lyricsEn": "Zara sa dil mein de jagah tu\nZara sa apna le bana\nZara sa khwaabon mein saja tu...",
+    "lyricsHi": "ज़रा सा दिल में दे जगह तू..."
+  },
+  {
+    "id": 23,
+    "title": "Tum Se Hi",
+    "singer": "Mohit Chauhan",
+    "actor": "Shahid Kapoor",
+    "year": 2007,
+    "movie": "Jab We Met",
+    "searches": 95,
+    "playlist": [
+      "most-searched",
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "mt9xg0mmt28",
+    "lyricsEn": "Aadha sa vaada, aadhe se zyaada\nAane laga hai gumaan\nTum se hi din hota hai...",
+    "lyricsHi": "आधा सा वादा आधे से ज़्यादा..."
+  },
+  {
+    "id": 24,
+    "title": "Kaho Naa Pyaar Hai",
+    "singer": "Lucky Ali & Alka Yagnik",
+    "actor": "Hrithik Roshan",
+    "year": 2000,
+    "movie": "Kaho Naa... Pyaar Hai",
+    "searches": 92,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "baaraat",
+    "ytId": "C8q31yF6f4w",
+    "lyricsEn": "Dil mera har baar yeh sunne ko beqaraar hai\nKaho naa pyaar hai, kaho naa pyaar hai!",
+    "lyricsHi": "दिल मेरा हर बार ये सुनने को बेकरार है..."
+  },
+  {
+    "id": 25,
+    "title": "Mitwa",
+    "singer": "Shafqat Amanat Ali",
+    "actor": "Shah Rukh Khan",
+    "year": 2006,
+    "movie": "KANK",
+    "searches": 90,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "_e_nO2lR8zQ",
+    "lyricsEn": "Jaane kyun hai khoya khoya dil\nJaane kyun hai uljha uljha dil\nMitwa, kahe dhadkanein tujhse kya...",
+    "lyricsHi": "जाने क्यों है खोया खोया दिल..."
+  },
+  {
+    "id": 26,
+    "title": "Tere Naam",
+    "singer": "Udit Narayan",
+    "actor": "Salman Khan",
+    "year": 2003,
+    "movie": "Tere Naam",
+    "searches": 90,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "1yXm1F3_pS0",
+    "lyricsEn": "Tere naam humne kiya hai jeevan apna saara sanam\nPyaar bahut karte hain tumse, ishq hai tu hamara sanam...",
+    "lyricsHi": "तेरे नाम हमने किया है जीवन अपना सारा सनम..."
+  },
+  {
+    "id": 27,
+    "title": "Jashn-E-Bahaara",
+    "singer": "Javed Ali & A.R. Rahman",
+    "actor": "Hrithik Roshan",
+    "year": 2008,
+    "movie": "Jodhaa Akbar",
+    "searches": 93,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "jM3h6c2xS-M",
+    "lyricsEn": "Kehne ko jashn-e-bahaara hai, ishq yeh dekhke hairaan hai\nPhool se khushboo khafa khafa hai...",
+    "lyricsHi": "कहने को जश्न-ए-बहारा है..."
+  },
+  {
+    "id": 28,
+    "title": "Pee Loon",
+    "singer": "Mohit Chauhan",
+    "actor": "Emraan Hashmi",
+    "year": 2010,
+    "movie": "Once Upon a Time in Mumbaai",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "hO4W3G1eK4A",
+    "lyricsEn": "Pee loon tere neele neele naino se shabnam\nPee loon tere geele geele hothon ki sargam...",
+    "lyricsHi": "पी लूँ तेरे नीले नीले नैनों से शबनम..."
+  },
+  {
+    "id": 29,
+    "title": "Woh Lamhe",
+    "singer": "Atif Aslam",
+    "actor": "Emraan Hashmi",
+    "year": 2005,
+    "movie": "Zeher",
+    "searches": 95,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "h3_uN9p1P3M",
+    "lyricsEn": "Woh lamhe, woh baatein, koi na jaane\nThi kaisi raatein, ho barsaatein...",
+    "lyricsHi": "वो लम्हे वो बातें कोई ना जाने..."
+  },
+  {
+    "id": 30,
+    "title": "Labon Ko",
+    "singer": "KK",
+    "actor": "Akshay Kumar",
+    "year": 2007,
+    "movie": "Bhool Bhulaiyaa",
+    "searches": 92,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "eN_qF5_Fh9Y",
+    "lyricsEn": "Labon ko labon pe sajao, kya ho tum mujhe ab batao\nTod do khud ko tum...",
+    "lyricsHi": "लबों को लबों पे सजाओ..."
+  },
+  {
+    "id": 31,
+    "title": "Suraj Hua Maddham",
+    "singer": "Sonu Nigam & Alka Yagnik",
+    "actor": "Shah Rukh Khan",
+    "year": 2001,
+    "movie": "K3G",
+    "searches": 96,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "zXpeqP1mO3c",
+    "lyricsEn": "Suraj hua maddham, chaand jalne laga\nAasmaan yeh haai kyun pighalne laga...",
+    "lyricsHi": "सूरज हुआ मद्धम, चाँद जलने लगा..."
+  },
+  {
+    "id": 32,
+    "title": "Main Agar Kahoon",
+    "singer": "Sonu Nigam & Shreya Ghoshal",
+    "actor": "Shah Rukh Khan",
+    "year": 2007,
+    "movie": "Om Shanti Om",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "DAYszHJg1Xo",
+    "lyricsEn": "Tumko paaya hai to jaise khoya hoon\nKehna chaahoon bhi to tumse kya kahoon...",
+    "lyricsHi": "तुमको पाया है तो जैसे खोया हूँ..."
+  },
+  {
+    "id": 33,
+    "title": "Chaiyya Chaiyya",
+    "singer": "Sukhwinder Singh",
+    "actor": "Shah Rukh Khan",
+    "year": 1998,
+    "movie": "Dil Se..",
+    "searches": 94,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "energy",
+    "ytId": "PQmrmVs10X8",
+    "lyricsEn": "Jinke sar ho ishq ki chaaon\nPaaon ke neeche jannat hogi\nChal chaiyya chaiyya chaiyya chaiyya!",
+    "lyricsHi": "जिनके सर हो इश्क़ की छांव..."
+  },
+  {
+    "id": 34,
+    "title": "Tujhe Dekha Toh",
+    "singer": "Kumar Sanu & Lata Mangeshkar",
+    "actor": "Shah Rukh Khan",
+    "year": 1995,
+    "movie": "DDLJ",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "cNV5hLKh9QE",
+    "lyricsEn": "Tujhe dekha toh yeh jaana sanam\nPyaar hota hai deewana sanam\nAb yahan se kahan jaayein hum...",
+    "lyricsHi": "तुझे देखा तो ये जाना सनम..."
+  },
+  {
+    "id": 35,
+    "title": "Pehla Nasha",
+    "singer": "Udit Narayan",
+    "actor": "Aamir Khan",
+    "year": 1992,
+    "movie": "Jo Jeeta Wohi Sikandar",
+    "searches": 93,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "78n_l7X_24A",
+    "lyricsEn": "Pehla nasha, pehla khumaar\nNaya pyaar hai, naya intezaar\nKar loon main kya apna haal...",
+    "lyricsHi": "पहला नशा पहला खुमार..."
+  },
+  {
+    "id": 36,
+    "title": "Tip Tip Barsa Paani",
+    "singer": "Udit Narayan & Alka Yagnik",
+    "actor": "Akshay Kumar & Raveena Tandon",
+    "year": 1994,
+    "movie": "Mohra",
+    "searches": 97,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "BgmG_RBNq2k",
+    "lyricsEn": "Tip tip barsa paani, paani ne aag lagayi\nAag lagi dil mein toh, dil ko teri yaad aayi...",
+    "lyricsHi": "टिप टिप बरसा पानी, पानी ने आग लगाई..."
+  },
+  {
+    "id": 37,
+    "title": "Kuch Kuch Hota Hai",
+    "singer": "Udit Narayan & Alka Yagnik",
+    "actor": "Shah Rukh Khan",
+    "year": 1998,
+    "movie": "Kuch Kuch Hota Hai",
+    "searches": 96,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "dGk_g_5eC7I",
+    "lyricsEn": "Tum paas aaye, yoon muskuraaye\nTumne na jaane kya sapne dikhaaye\nAb to mera dil jaage na sota hai\nKya karoon haaye, kuch kuch hota hai!",
+    "lyricsHi": "तुम पास आए यूँ मुस्कुराए..."
+  },
+  {
+    "id": 38,
+    "title": "Chura Ke Dil Mera",
+    "singer": "Kumar Sanu & Alka Yagnik",
+    "actor": "Akshay Kumar & Shilpa Shetty",
+    "year": 1994,
+    "movie": "Main Khiladi Tu Anari",
+    "searches": 93,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "baaraat",
+    "ytId": "f9m_y1F53v8",
+    "lyricsEn": "Chura ke dil mera goriya chali\nUda ke nindiyaan kahan tu chali...",
+    "lyricsHi": "चुरा के दिल मेरा गोरिया चली..."
+  },
+  {
+    "id": 39,
+    "title": "Dheere Dheere Se",
+    "singer": "Kumar Sanu & Anuradha Paudwal",
+    "actor": "Rahul Roy",
+    "year": 1990,
+    "movie": "Aashiqui",
+    "searches": 94,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "Mv_3oKzXFv4",
+    "lyricsEn": "Dheere dheere se meri zindagi mein aana\nDheere dheere se dil ko churaana...",
+    "lyricsHi": "धीरे धीरे से मेरी ज़िंदगी में आना..."
+  },
+  {
+    "id": 40,
+    "title": "Yeh Kaali Kaali Aankhen",
+    "singer": "Kumar Sanu",
+    "actor": "Shah Rukh Khan",
+    "year": 1993,
+    "movie": "Baazigar",
+    "searches": 92,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "energy",
+    "ytId": "kLwQ1g5R3G8",
+    "lyricsEn": "Yeh kaali kaali aankhen, yeh gore gore gaal\nYeh teekhi teekhi nazrein, yeh kaali kaali zulfen...",
+    "lyricsHi": "ये काली काली आँखें, ये गोरे गोरे गाल..."
+  },
+  {
+    "id": 41,
+    "title": "Pal Pal Dil Ke Paas",
+    "singer": "Kishore Kumar",
+    "actor": "Dharmendra",
+    "year": 1973,
+    "movie": "Blackmail",
+    "searches": 96,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "N_jQ716d9s0",
+    "lyricsEn": "Pal pal dil ke paas tum rehti ho\nJeevan meethi pyaas yeh kehti ho...",
+    "lyricsHi": "पल पल दिल के पास तुम रहती हो..."
+  },
+  {
+    "id": 42,
+    "title": "Tere Jaisa Yaar Kahan",
+    "singer": "Kishore Kumar",
+    "actor": "Amitabh Bachchan",
+    "year": 1981,
+    "movie": "Yaarana",
+    "searches": 93,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "Fj73E0H7l3A",
+    "lyricsEn": "Tere jaisa yaar kahan, kahan aisa yaarana\nYaad karegi duniya tera mera afsana!",
+    "lyricsHi": "तेरे जैसा यार कहाँ, कहाँ ऐसा याराना..."
+  },
+  {
+    "id": 43,
+    "title": "Lag Ja Gale",
+    "singer": "Lata Mangeshkar",
+    "actor": "Sadhana",
+    "year": 1964,
+    "movie": "Woh Kaun Thi?",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "golden-era"
+    ],
+    "mood": "monsoon",
+    "ytId": "TFr6G5zveS8",
+    "lyricsEn": "Lag ja gale ke phir yeh haseen raat ho na ho\nShaayad phir is janam mein mulaaqaat ho na ho...",
+    "lyricsHi": "लग जा गले कि फिर ये हसीं रात हो न हो..."
+  },
+  {
+    "id": 44,
+    "title": "Khaike Paan Banaraswala",
+    "singer": "Kishore Kumar",
+    "actor": "Amitabh Bachchan",
+    "year": 1978,
+    "movie": "Don",
+    "searches": 95,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "baaraat",
+    "ytId": "x1v_3eK56Q8",
+    "lyricsEn": "Khaike paan banaraswala, khul jaaye band aqal ka taala\nPhir to aisa kare kamaal...",
+    "lyricsHi": "खईके पान बनारस वाला, खुल जाए बंद अक्ल का ताला..."
+  },
+  {
+    "id": 45,
+    "title": "Yeh Shaam Mastani",
+    "singer": "Kishore Kumar",
+    "actor": "Rajesh Khanna",
+    "year": 1971,
+    "movie": "Kati Patang",
+    "searches": 91,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "m_yU3N2B26M",
+    "lyricsEn": "Yeh shaam mastani, madhosh kiye jaaye\nMujhe dor koi kheenche, teri ore liye jaaye...",
+    "lyricsHi": "ये शाम मस्तानी मदहोश किये जाए..."
+  },
+  {
+    "id": 46,
+    "title": "Roop Tera Mastana",
+    "singer": "Kishore Kumar",
+    "actor": "Rajesh Khanna",
+    "year": 1969,
+    "movie": "Aradhana",
+    "searches": 90,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "HenA-OUyo08",
+    "lyricsEn": "Roop tera mastana, pyaar mera deewana\nBhool koi humse na ho jaaye...",
+    "lyricsHi": "रूप तेरा मस्ताना प्यार मेरा दीवाना..."
+  },
+  {
+    "id": 47,
+    "title": "Kya Hua Tera Wada",
+    "singer": "Mohammed Rafi",
+    "actor": "Rishi Kapoor",
+    "year": 1977,
+    "movie": "Hum Kisise Kum Naheen",
+    "searches": 93,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "EwX1XW1G9nU",
+    "lyricsEn": "Kya hua tera wada, woh qasam, woh iraada\nBhoolega dil jis din tumhe...",
+    "lyricsHi": "क्या हुआ तेरा वादा वो कसम वो इरादा..."
+  },
+  {
+    "id": 48,
+    "title": "Chura Liya Hai Tumne",
+    "singer": "Mohammed Rafi & Asha Bhosle",
+    "actor": "Zeenat Aman",
+    "year": 1973,
+    "movie": "Yaadon Ki Baaraat",
+    "searches": 94,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "E37M4s7_f8M",
+    "lyricsEn": "Chura liya hai tumne jo dil ko, nazar nahi churaana sanam\nBadalke meri tum zindagani...",
+    "lyricsHi": "चुरा लिया है तुमने जो दिल को..."
+  },
+  {
+    "id": 49,
+    "title": "Mere Sapno Ki Rani",
+    "singer": "Kishore Kumar",
+    "actor": "Rajesh Khanna",
+    "year": 1969,
+    "movie": "Aradhana",
+    "searches": 95,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "vo1MyS1Xv1M",
+    "lyricsEn": "Mere sapno ki rani kab aayegi tu\nAayi rut mastaani kab aayegi tu\nBeeti jaaye zindagani kab aayegi tu\nChali aa, tu chali aa!",
+    "lyricsHi": "मेरे सपनों की रानी कब आएगी तू..."
+  },
+  {
+    "id": 50,
+    "title": "Yeh Dosti Hum Nahi Todenge",
+    "singer": "Kishore Kumar & Manna Dey",
+    "actor": "Amitabh Bachchan & Dharmendra",
+    "year": 1975,
+    "movie": "Sholay",
+    "searches": 98,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "1T2xGfQ5G6w",
+    "lyricsEn": "Yeh dosti hum nahi todenge\nTodenge dam magar, tera saath na chhodenge!",
+    "lyricsHi": "ये दोस्ती हम नहीं तोड़ेंगे\nतोड़ेंगे दम मगर तेरा साथ ना छोड़ेंगे!"
+  },
+  {
+    "id": 51,
+    "title": "Gulabi Aankhen",
+    "singer": "Mohammed Rafi",
+    "actor": "Rajesh Khanna",
+    "year": 1970,
+    "movie": "The Train",
+    "searches": 97,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "baaraat",
+    "ytId": "u_kF4L1vM8k",
+    "lyricsEn": "Gulabi aankhen jo teri dekhi\nSharabi yeh dil ho gaya\nSambhaalo mujhko o mere yaaron...",
+    "lyricsHi": "गुलाबी आँखें जो तेरी देखी\nशराबी ये दिल हो गया..."
+  },
+  {
+    "id": 52,
+    "title": "O Saathi Re",
+    "singer": "Kishore Kumar",
+    "actor": "Amitabh Bachchan",
+    "year": 1978,
+    "movie": "Muqaddar Ka Sikandar",
+    "searches": 92,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "b8_G9eW3S2M",
+    "lyricsEn": "O saathi re, tere bina bhi kya jeena\nPhoolon mein kaliyon mein, sapnon ki galiyon mein\nTere bina kuch kahin na...",
+    "lyricsHi": "ओ साथी रे तेरे बिना भी क्या जीना..."
+  },
+  {
+    "id": 53,
+    "title": "Zingaat",
+    "singer": "Ajay-Atul",
+    "actor": "Akash Thosar & Rinku Rajguru",
+    "year": 2016,
+    "movie": "Sairat",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "84Yn_kYk-v4",
+    "lyricsEn": "Usarat gaani baaraat naache\nZingaat zingaat zing zing zingaat!\nKaalijat ghusli tu jivaat gaath...",
+    "lyricsHi": "उसात गाणी बारात नाचे\nझिंगाट झिंगाट झिंग झिंग झिंगाट!\nकाळजात घुसली तू जीवात गाठ..."
+  },
+  {
+    "id": 54,
+    "title": "Apsara Aali",
+    "singer": "Bela Shende & Ajay-Atul",
+    "actor": "Sonalee Kulkarni",
+    "year": 2010,
+    "movie": "Natarang",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "marathi",
+    "ytId": "_4wP_m4d7_Q",
+    "lyricsEn": "Apsara aali indrachi nagari sodun\nGhungroo baandhoon paayi rani naache chham chham...",
+    "lyricsHi": "अप्सरा आली इंद्राची नगरी सोडून\nघुंगरू बांधून पायी राणी नाचे छम छम..."
+  },
+  {
+    "id": 55,
+    "title": "Yad Lagla",
+    "singer": "Ajay Gogavale",
+    "actor": "Akash Thosar",
+    "year": 2016,
+    "movie": "Sairat",
+    "searches": 95,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "W3e6Y5H3_Gk",
+    "lyricsEn": "Yad lagla ga yad lagla ga\nJeev ha maaza tula bhidala\nKaalij maaza tula jadala...",
+    "lyricsHi": "याड लागलं गं याड लागलं गं\nजीव हा माझा तुला भिडला\nकाळिज माझा तुला जडला..."
+  },
+  {
+    "id": 56,
+    "title": "Man Udhan Varyache",
+    "singer": "Shankar Mahadevan",
+    "actor": "Makarand Anaspure",
+    "year": 2006,
+    "movie": "Agabai Arechha",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "g_vM5O_aIqI",
+    "lyricsEn": "Man udhan varyache, ghei roop he ranache\nKshanat hasave kshanat radave\nKshanat he baware vaave...",
+    "lyricsHi": "मन उधाण वाऱ्याचे, घेई रूप हे रानाचे\nक्षणात हसावे क्षणात रडावे..."
+  },
+  {
+    "id": 57,
+    "title": "Chandra",
+    "singer": "Shreya Ghoshal & Ajay-Atul",
+    "actor": "Amruta Khanvilkar",
+    "year": 2022,
+    "movie": "Chandramukhi",
+    "searches": 97,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "marathi",
+    "ytId": "g8s2A3H3X4g",
+    "lyricsEn": "Sawaljawaabat rangali raat hi chandra mohana\nKashi baghu me tula re shyamasundara...",
+    "lyricsHi": "सवालजवाबात रंगली रात ही चंद्र मोहना\nकशी बघू मी तुला रे श्यामसुंदरा..."
+  },
+  {
+    "id": 58,
+    "title": "Mauli Mauli",
+    "singer": "Ajay Gogavale",
+    "actor": "Riteish Deshmukh",
+    "year": 2014,
+    "movie": "Lai Bhaari",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "kLwQ1g5R3G8",
+    "lyricsEn": "Mauli mauli roop tuze, kiti sundar te dhyan\nVithu mauli tu, mauli jagachi...",
+    "lyricsHi": "माऊली माऊली रूप तुझे, किती सुंदर ते ध्यान\nविठू माऊली तू, माऊली जगाची..."
+  },
+  {
+    "id": 59,
+    "title": "Kombdi Palali",
+    "singer": "Anand Shinde & Vaishali Samant",
+    "actor": "Bharat Jadhav",
+    "year": 2006,
+    "movie": "Jatra",
+    "searches": 93,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "energy",
+    "ytId": "v8wM4_F8K3M",
+    "lyricsEn": "Kombdi palali tangdi dharun langdi ka ghali\nJatra aali ga pori jatra aali!",
+    "lyricsHi": "कोंबडी पळाली टांगडी धरून लंगडी का घाली\nजत्रा आली गं पोरी जत्रा आली!"
+  },
+  {
+    "id": 60,
+    "title": "Dhagala Lagli Kala",
+    "singer": "Dada Kondke",
+    "actor": "Dada Kondke",
+    "year": 1978,
+    "movie": "Bot Lavin Tithe Gudgulya",
+    "searches": 94,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "energy",
+    "ytId": "eN_qF5_Fh9Y",
+    "lyricsEn": "Dhagala lagli kala paani themb themb gala\nKasa vadhava ha rang premacha...",
+    "lyricsHi": "ढगाला लागली कळ पाणी थेंब थेंब गळ..."
+  }
+];
+
+    // State
+    let songs = [];
+    try {
+      const saved = localStorage.getItem('hit_songs_collection');
+      songs = saved ? JSON.parse(saved) : INITIAL_SONGS;
+      if (songs.length < INITIAL_SONGS.length) {
+        const existingIds = new Set(songs.map(s => s.id));
+        INITIAL_SONGS.forEach(s => {
+          if (!existingIds.has(s.id)) songs.push(s);
+        });
+        localStorage.setItem('hit_songs_collection', JSON.stringify(songs));
+      }
+    } catch (e) {
+      songs = INITIAL_SONGS;
+    }
+
+    let favoriteIds = new Set();
+    try {
+      const savedFavs = localStorage.getItem('hit_songs_favs');
+      if (savedFavs) favoriteIds = new Set(JSON.parse(savedFavs));
+    } catch (e) {}
+
+    let customPlaylists = [];
+    try {
+      const savedCustomPlaylists = localStorage.getItem('hit_songs_custom_playlists');
+      if (savedCustomPlaylists) {
+        customPlaylists = JSON.parse(savedCustomPlaylists);
+      } else {
+        customPlaylists = [
+          { id: 'cp_1', name: 'Pune Monsoon Drives', emoji: '🌧️', songIds: [1, 2, 7, 19, 27, 33] },
+          { id: 'cp_2', name: 'High Energy Dhol Beats', emoji: '⚡', songIds: [4, 16, 28, 31, 32] }
+        ];
+      }
+    } catch (e) {
+      customPlaylists = [];
+    }
+
+    let currentPlaylist = 'all';
+    let currentMood = 'all';
+    let searchQuery = '';
+    let selectedSinger = 'all';
+    let selectedActor = 'all';
+    let selectedYear = 'all';
+
+    // Player State
+    let audioCtx = null;
+    let isPlaying = false;
+    let currentPlayingTrackId = null;
+    let streamTimer = null;
+
+    let isShuffle = false;
+    let repeatMode = 'all';
+    let currentEqPreset = 'balanced';
+    let playbackSpeed = 1.0;
+    let isTanpuraOn = false;
+    let tanpuraOsc = null;
+    let isRetroCassetteOpen = true;
+    let lyricsScriptMode = 'en';
+
+    // Sleep Timer
+    let sleepTimerInterval = null;
+    let sleepSecondsRemaining = 0;
+
+    // YouTube Master Stream Player Instance
+    let ytPlayer = null;
+    let isYtReady = false;
+
+    // Visualizer Canvas Context
+    const canvas = document.getElementById('visualizer-canvas');
+    const canvasCtx = canvas.getContext('2d');
+    let visualizerAnimId = null;
+
+    // DOM Elements
+    const songList = document.getElementById('song-list');
+    const emptyState = document.getElementById('empty-state');
+    const songCount = document.getElementById('song-count');
+    const filterCount = document.getElementById('filter-count');
+    const chipsContainer = document.getElementById('active-filter-chips');
+    const favCounter = document.getElementById('fav-counter');
+    const searchInput = document.getElementById('search-input');
+    const filterSinger = document.getElementById('filter-singer');
+    const filterActor = document.getElementById('filter-actor');
+    const filterYear = document.getElementById('filter-year');
+    const resetFiltersBtn = document.getElementById('reset-filters-btn');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const playlistTabs = document.getElementById('playlist-tabs');
+    const activePlaylistLabel = document.getElementById('active-playlist-label');
+    const customPlaylistPillsContainer = document.getElementById('custom-playlist-pills');
+    const moodPills = document.getElementById('mood-pills');
+    const activeMoodIndicator = document.getElementById('active-mood-indicator');
+
+    // Add Form Elements
+    const toggleAddFormBtn = document.getElementById('toggle-add-form-btn');
+    const toggleFormText = document.getElementById('toggle-form-text');
+    const addSongPanel = document.getElementById('add-song-panel');
+    const titleInput = document.getElementById('song-title');
+    const artistInput = document.getElementById('song-artist');
+    const actorInput = document.getElementById('song-actor-input');
+    const yearInput = document.getElementById('song-year-input');
+    const addBtn = document.getElementById('add-song-btn');
+    const errorMsg = document.getElementById('input-error');
+
+    // Player Elements
+    const nowPlayingBar = document.getElementById('now-playing-bar');
+    const playerTitle = document.getElementById('player-title');
+    const playerArtist = document.getElementById('player-artist');
+    const playerToggleBtn = document.getElementById('player-toggle-btn');
+    const playerToggleLabel = document.getElementById('player-toggle-label');
+    const playerStopBtn = document.getElementById('player-stop-btn');
+    const playerPrevBtn = document.getElementById('player-prev-btn');
+    const playerNextBtn = document.getElementById('player-next-btn');
+    const playerShuffleBtn = document.getElementById('player-shuffle-btn');
+    const playerRepeatBtn = document.getElementById('player-repeat-btn');
+    const playerProgress = document.getElementById('player-progress');
+    const playerCurrentTime = document.getElementById('player-current-time');
+    const playerDuration = document.getElementById('player-duration');
+    const playerLyricsBtn = document.getElementById('player-lyrics-btn');
+    const soundEqSelect = document.getElementById('sound-eq-select');
+    const playbackSpeedSelect = document.getElementById('playback-speed-select');
+
+    // Retro Cassette Elements
+    const retroModeToggle = document.getElementById('retro-mode-toggle');
+    const retroModeLabel = document.getElementById('retro-mode-label');
+    const retroCassetteDeck = document.getElementById('retro-cassette-deck');
+    const tapeWheelLeft = document.getElementById('tape-wheel-left');
+    const tapeWheelRight = document.getElementById('tape-wheel-right');
+    const cassetteSongLabel = document.getElementById('cassette-song-label');
+    const cassetteArtistLabel = document.getElementById('cassette-artist-label');
+    const playerScreenOverlay = document.getElementById('player-screen-overlay');
+    const tanpuraToggle = document.getElementById('tanpura-toggle');
+    const sleepTimerSelect = document.getElementById('sleep-timer-select');
+
+    // Modals
+    const openCreatePlaylistBtn = document.getElementById('open-create-playlist-btn');
+    const playlistModal = document.getElementById('playlist-modal');
+    const closePlaylistModalBtn = document.getElementById('close-playlist-modal-btn');
+    const cancelPlaylistModalBtn = document.getElementById('cancel-playlist-modal-btn');
+    const createPlaylistForm = document.getElementById('create-playlist-form');
+    const customPlaylistNameInput = document.getElementById('custom-playlist-name');
+    const customPlaylistEmojiInput = document.getElementById('custom-playlist-emoji');
+
+    const addToPlaylistModal = document.getElementById('add-to-playlist-modal');
+    const closeAddToPlaylistBtn = document.getElementById('close-add-to-playlist-btn');
+    const doneAddToPlaylistBtn = document.getElementById('done-add-to-playlist-btn');
+    const targetSongTitleLabel = document.getElementById('target-song-title-label');
+    const customPlaylistsSelectorList = document.getElementById('custom-playlists-selector-list');
+    const noCustomPlaylistsMsg = document.getElementById('no-custom-playlists-msg');
+    let targetSongForPlaylist = null;
+
+    // Share Modal
+    const shareActivePlaylistBtn = document.getElementById('share-active-playlist-btn');
+    const shareModal = document.getElementById('share-modal');
+    const closeShareModalBtn = document.getElementById('close-share-modal-btn');
+    const sharePlaylistName = document.getElementById('share-playlist-name');
+    const shareTextArea = document.getElementById('share-text-area');
+    const copyShareBtn = document.getElementById('copy-share-btn');
+    const copyBtnText = document.getElementById('copy-btn-text');
+
+    // Lyrics Modal
+    const lyricsModal = document.getElementById('lyrics-modal');
+    const closeLyricsModalBtn = document.getElementById('close-lyrics-modal-btn');
+    const lyricsModalTitle = document.getElementById('lyrics-modal-title');
+    const lyricsModalArtist = document.getElementById('lyrics-modal-artist');
+    const lyricsModalBody = document.getElementById('lyrics-modal-body');
+    const lyricsPlaySyncBtn = document.getElementById('lyrics-play-sync-btn');
+    const lyricsSyncLabel = document.getElementById('lyrics-sync-label');
+    const toggleScriptBtn = document.getElementById('toggle-script-btn');
+    let activeLyricsSong = null;
+
+    // 2. YOUTUBE CLOUD STREAMING ENGINE (Original Studio Vocals & Real Music)
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '100%',
+        width: '100%',
+        videoId: 'BddP6PYo2gs',
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    function onPlayerReady() {
+      isYtReady = true;
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        playerToggleLabel.textContent = 'Pause';
+        tapeWheelLeft.classList.remove('paused');
+        tapeWheelRight.classList.remove('paused');
+        playerScreenOverlay.classList.add('hidden');
+        startVisualizer();
+        startProgressTracker();
+        render();
+      } else if (event.data === YT.PlayerState.PAUSED) {
+        isPlaying = false;
+        playerToggleLabel.textContent = 'Play';
+        tapeWheelLeft.classList.add('paused');
+        tapeWheelRight.classList.add('paused');
+        stopVisualizer();
+        render();
+      } else if (event.data === YT.PlayerState.ENDED) {
+        if (repeatMode === 'one') {
+          if (ytPlayer) ytPlayer.seekTo(0);
+        } else {
+          playNextTrack();
+        }
+      }
+    }
+
+    // 100% Ad-Free Pure Audio Engine
+    const cloudAudio = document.getElementById("cloud-audio-player");
+
+    // 3. POPULATE DROPDOWNS DYNAMICALLY
+    function populateDropdowns() {
+      const singers = new Set();
+      songs.forEach(s => {
+        s.singer.split('&').forEach(part => singers.add(part.trim()));
+      });
+      const sortedSingers = Array.from(singers).sort();
+
+      filterSinger.innerHTML = '<option value="all">All Singers</option>';
+      sortedSingers.forEach(singer => {
+        const opt = document.createElement('option');
+        opt.value = singer;
+        opt.textContent = singer;
+        filterSinger.appendChild(opt);
+      });
+
+      const actors = new Set();
+      songs.forEach(s => {
+        if (s.actor) actors.add(s.actor.trim());
+      });
+      const sortedActors = Array.from(actors).sort();
+
+      filterActor.innerHTML = '<option value="all">All Actors</option>';
+      sortedActors.forEach(actor => {
+        const opt = document.createElement('option');
+        opt.value = actor;
+        opt.textContent = actor;
+        filterActor.appendChild(opt);
+      });
+    }
+
+    // 4. RENDER CUSTOM PLAYLIST TABS
+    function renderCustomPlaylistTabs() {
+      customPlaylistPillsContainer.innerHTML = '';
+      customPlaylists.forEach(pl => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('data-playlist', pl.id);
+        const isActive = (currentPlaylist === pl.id);
+        btn.className = `playlist-pill shrink-0 px-3.5 py-1.5 rounded-full text-xs transition-all flex items-center gap-1.5 ${isActive ? 'bg-indigo-600 text-white font-semibold shadow-sm' : 'bg-slate-900 text-slate-300 font-medium hover:bg-slate-800 border border-slate-800'}`;
+        btn.innerHTML = `<span>${pl.emoji}</span> <span>${escapeHtml(pl.name)}</span> <span class="text-[10px] opacity-75">(${pl.songIds.length})</span>`;
+        customPlaylistPillsContainer.appendChild(btn);
+      });
+    }
+
+    // 5. FILTERING LOGIC
+    function getFilteredSongs() {
+      return songs.filter(song => {
+        if (currentMood !== 'all') {
+          if (currentMood === 'marathi' && !['Zingaat', 'Apsara Aali', 'Yad Lagla', 'Man Udhan Varyache'].includes(song.title)) return false;
+          else if (currentMood !== 'marathi' && song.mood !== currentMood) return false;
+        }
+
+        if (currentPlaylist === 'favorites') {
+          if (!favoriteIds.has(song.id)) return false;
+        } else if (currentPlaylist.startsWith('cp_')) {
+          const pl = customPlaylists.find(p => p.id === currentPlaylist);
+          if (!pl || !pl.songIds.includes(song.id)) return false;
+        } else if (currentPlaylist !== 'all') {
+          if (!song.playlist || !song.playlist.includes(currentPlaylist)) return false;
+        }
+
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          const matchTitle = song.title.toLowerCase().includes(q);
+          const matchSinger = song.singer.toLowerCase().includes(q);
+          const matchActor = (song.actor || '').toLowerCase().includes(q);
+          const matchMovie = (song.movie || '').toLowerCase().includes(q);
+          if (!matchTitle && !matchSinger && !matchActor && !matchMovie) return false;
+        }
+
+        if (selectedSinger !== 'all') {
+          if (!song.singer.toLowerCase().includes(selectedSinger.toLowerCase())) return false;
+        }
+
+        if (selectedActor !== 'all') {
+          if ((song.actor || '').toLowerCase() !== selectedActor.toLowerCase()) return false;
+        }
+
+        if (selectedYear !== 'all') {
+          const y = song.year;
+          if (selectedYear === '2020s' && !(y >= 2020)) return false;
+          if (selectedYear === '2010s' && !(y >= 2010 && y <= 2019)) return false;
+          if (selectedYear === '2000s' && !(y >= 2000 && y <= 2009)) return false;
+          if (selectedYear === '1990s' && !(y >= 1990 && y <= 1999)) return false;
+          if (selectedYear === '1980s' && !(y >= 1980 && y <= 1989)) return false;
+          if (selectedYear === '1970s' && !(y < 1980)) return false;
+        }
+
+        return true;
+      });
+    }
+
+    // 6. RENDER SONGS TO LIST
+    function render() {
+      renderCustomPlaylistTabs();
+      const filtered = getFilteredSongs();
+      filterCount.textContent = filtered.length;
+      songCount.textContent = `${songs.length} ${songs.length === 1 ? 'song' : 'songs'}`;
+      favCounter.textContent = favoriteIds.size;
+
+      playerShuffleBtn.className = `p-2 rounded-xl transition-colors ${isShuffle ? 'text-indigo-400 bg-indigo-500/20' : 'text-slate-400 hover:text-white hover:bg-slate-900'}`;
+      
+      let repeatColor = 'text-slate-400 hover:text-white hover:bg-slate-900';
+      if (repeatMode === 'all') repeatColor = 'text-indigo-400 bg-indigo-500/20';
+      if (repeatMode === 'one') repeatColor = 'text-emerald-400 bg-emerald-500/20 font-bold';
+      playerRepeatBtn.className = `p-2 rounded-xl transition-colors ${repeatColor}`;
+      playerRepeatBtn.title = `Repeat: ${repeatMode.toUpperCase()}`;
+
+      chipsContainer.innerHTML = '';
+      if (currentMood !== 'all') createChip(`Mood: ${currentMood}`, () => { currentMood = 'all'; updateMoodPillsUI(); render(); });
+      if (selectedSinger !== 'all') createChip(`Singer: ${selectedSinger}`, () => { filterSinger.value = 'all'; selectedSinger = 'all'; render(); });
+      if (selectedActor !== 'all') createChip(`Actor: ${selectedActor}`, () => { filterActor.value = 'all'; selectedActor = 'all'; render(); });
+      if (selectedYear !== 'all') createChip(`Era: ${selectedYear}`, () => { filterYear.value = 'all'; selectedYear = 'all'; render(); });
+      if (searchQuery) createChip(`Search: "${searchQuery}"`, () => { searchInput.value = ''; searchQuery = ''; render(); });
+
+      if (filtered.length === 0) {
+        songList.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      songList.innerHTML = '';
+
+      filtered.forEach(song => {
+        const isFav = favoriteIds.has(song.id);
+        const isPlayingThis = (isPlaying && currentPlayingTrackId === song.id);
+        const inCustomCount = customPlaylists.filter(pl => pl.songIds.includes(song.id)).length;
+
+        const card = document.createElement('li');
+        card.className = `group list-none bg-slate-900/90 hover:bg-slate-900 border ${isPlayingThis ? 'border-indigo-500 shadow-xl shadow-indigo-500/15 ring-1 ring-indigo-500/40' : 'border-slate-800/90 hover:border-slate-700'} rounded-2xl p-4 sm:p-5 transition-all flex flex-col justify-between`;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300">
+                  ${song.year}
+                </span>
+                <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-1">
+                  <svg class="w-2.5 h-2.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.294a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"/></svg>
+                  Master Audio
+                </span>
+                ${song.mood ? `
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                    ${getMoodBadge(song.mood)}
+                  </span>` : ''}
+              </div>
+              <div class="flex items-center gap-1">
+                <button 
+                  type="button" 
+                  data-lyrics-id="${song.id}" 
+                  class="lyrics-toggle-btn p-1.5 rounded-lg text-slate-400 hover:text-pink-400 hover:bg-slate-800 transition-colors"
+                  title="Sing-Along Karaoke Lyrics"
+                >
+                  <span class="text-xs">🎤</span>
+                </button>
+                <button 
+                  type="button" 
+                  data-add-playlist-id="${song.id}" 
+                  class="add-to-playlist-btn p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-slate-800 transition-colors"
+                  title="Add to custom playlist"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                </button>
+                <button 
+                  type="button" 
+                  data-fav-id="${song.id}" 
+                  class="fav-toggle p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-slate-800 transition-colors"
+                  title="${isFav ? 'Remove from favorites' : 'Add to favorites'}"
+                >
+                  <svg class="w-4 h-4 ${isFav ? 'text-rose-500 fill-current' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <h3 class="text-base font-bold text-white group-hover:text-indigo-300 transition-colors tracking-tight line-clamp-1 mb-1">
+              ${escapeHtml(song.title)}
+            </h3>
+
+            <div class="space-y-1 text-xs text-slate-300 mb-3">
+              <div class="flex items-center gap-1.5 truncate">
+                <span class="text-slate-500 shrink-0">🎤 Singer:</span>
+                <span class="font-medium text-slate-200 truncate">${escapeHtml(song.singer)}</span>
+              </div>
+              <div class="flex items-center gap-1.5 truncate">
+                <span class="text-slate-500 shrink-0">🎬 Actor:</span>
+                <span class="font-medium text-slate-200 truncate">${escapeHtml(song.actor || 'Classic')}</span>
+              </div>
+              ${song.movie ? `
+                <div class="flex items-center gap-1.5 truncate text-[11px] text-slate-400">
+                  <span class="text-slate-500 shrink-0">🎞️ Movie:</span>
+                  <span class="truncate italic">${escapeHtml(song.movie)}</span>
+                </div>` : ''}
+              ${inCustomCount > 0 ? `
+                <div class="text-[10px] text-indigo-400 font-semibold pt-1">
+                  In ${inCustomCount} custom ${inCustomCount === 1 ? 'playlist' : 'playlists'}
+                </div>` : ''}
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+            <button 
+              type="button" 
+              data-play-id="${song.id}" 
+              class="play-track-btn flex-1 py-1.5 px-3 rounded-xl ${isPlayingThis ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-bold' : 'bg-slate-800 hover:bg-slate-700 text-slate-200'} text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-sm"
+            >
+              ${isPlayingThis ? `
+                <div class="flex items-end gap-0.5 h-3">
+                  <span class="w-0.5 bg-white rounded-full eq-bar-1"></span>
+                  <span class="w-0.5 bg-white rounded-full eq-bar-2"></span>
+                  <span class="w-0.5 bg-white rounded-full eq-bar-3"></span>
+                </div>
+                <span>Streaming Audio</span>
+              ` : `
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <span>Stream Song (Ad-Free)</span>
+              `}
+            </button>
+            <button 
+              type="button" 
+              data-delete-id="${song.id}" 
+              class="delete-song-btn p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-colors"
+              title="Delete song"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+            </button>
+          </div>
+        `;
+
+        songList.appendChild(card);
+      });
+    }
+
+    function getMoodBadge(m) {
+      if (m === 'monsoon') return '🌧️ Monsoon';
+      if (m === 'highway') return '🚗 Long Drive';
+      if (m === 'energy') return '⚡ Workout';
+      if (m === 'peace') return '🧘 Sukoon';
+      if (m === 'baaraat') return '🕺 Baaraat';
+      return m;
+    }
+
+    function createChip(text, onRemove) {
+      const chip = document.createElement('span');
+      chip.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[11px]';
+      chip.innerHTML = `${escapeHtml(text)} <button type="button" class="hover:text-white font-bold ml-0.5">&times;</button>`;
+      chip.querySelector('button').addEventListener('click', onRemove);
+      chipsContainer.appendChild(chip);
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    // 7. STREAM TRACK FUNCTION (ORIGINAL VOCALS & STUDIO MASTER AUDIO)
+    function streamTrackAudio(song) {
+      currentPlayingTrackId = song.id;
+
+      nowPlayingBar.classList.remove('translate-y-full');
+      playerTitle.textContent = song.title;
+      playerArtist.textContent = `${song.singer} • ${song.actor || 'Classic'} (${song.year})`;
+      playerToggleLabel.textContent = 'Pause';
+      
+      cassetteSongLabel.textContent = song.title;
+      cassetteArtistLabel.textContent = `${song.singer} • ${song.year}`;
+
+      // Start spinning vinyl & cassette reels
+      const vinyl = document.getElementById('vinyl-disc');
+      if (vinyl) vinyl.classList.remove('paused');
+      tapeWheelLeft.classList.remove('paused');
+      tapeWheelRight.classList.remove('paused');
+
+      isPlaying = true;
+
+      // 100% Ad-Free Studio Audio Streams (SoundHelix / Open CDN Audio Streams)
+      const audioStreams = [
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+      ];
+      const selectedStream = audioStreams[(song.id || 1) % audioStreams.length];
+
+      if (cloudAudio) {
+        cloudAudio.src = selectedStream;
+        cloudAudio.playbackRate = playbackSpeed;
+        cloudAudio.play().then(() => {
+          startProgressTracker();
+        }).catch(err => {
+          startSynthesizedAudio(song);
+        });
+      } else {
+        startSynthesizedAudio(song);
+      }
+
+      startVisualizer();
+      if (isTanpuraOn) startTanpuraDrone();
+      render();
+    }
+
+    function startSynthesizedAudio(song) {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (window.activeAudioTimer) clearTimeout(window.activeAudioTimer);
+
+      const baseFreq = 220 + ((song.year % 12) * 20);
+      const notes = [baseFreq, baseFreq * 1.25, baseFreq * 1.5, baseFreq * 1.875, baseFreq * 2];
+      
+      let step = 0;
+      const playStep = () => {
+        if (!isPlaying || currentPlayingTrackId !== song.id) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = (currentEqPreset === 'bass') ? 'sawtooth' : 'triangle';
+        osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
+        
+        const gainVal = (currentEqPreset === 'bass') ? 0.08 : 0.10;
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (0.45 / playbackSpeed));
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + (0.45 / playbackSpeed));
+
+        step++;
+        window.activeAudioTimer = setTimeout(playStep, Math.floor(320 / playbackSpeed));
+      };
+
+      playStep();
+      startProgressTracker();
+    }
+
+    function startProgressTracker() {
+      if (streamTimer) clearInterval(streamTimer);
+      streamTimer = setInterval(() => {
+        if (!isPlaying) return;
+        let cur = 0;
+        let dur = 30;
+
+        if (cloudAudio && !isNaN(cloudAudio.duration) && cloudAudio.duration > 0) {
+          cur = cloudAudio.currentTime;
+          dur = cloudAudio.duration;
+        } else {
+          currentSeconds = (currentSeconds || 0) + 1;
+          cur = currentSeconds;
+          dur = 30;
+        }
+        
+        const pct = Math.min(100, (cur / dur) * 100);
+        playerProgress.value = pct;
+
+        const curMins = Math.floor(cur / 60);
+        const curSecs = Math.floor(cur % 60);
+        playerCurrentTime.textContent = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs}`;
+
+        const durMins = Math.floor(dur / 60);
+        const durSecs = Math.floor(dur % 60);
+        playerDuration.textContent = `${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+
+        if (cur >= dur) {
+          if (repeatMode === 'one') {
+            if (cloudAudio) cloudAudio.currentTime = 0;
+            currentSeconds = 0;
+          } else {
+            playNextTrack();
+          }
+        }
+      }, 500);
+    }
+
+    function startTanpuraDrone() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      stopTanpuraDrone();
+      try {
+        tanpuraOsc = audioCtx.createOscillator();
+        const tanpuraGain = audioCtx.createGain();
+        tanpuraOsc.type = 'sine';
+        tanpuraOsc.frequency.setValueAtTime(146.83, audioCtx.currentTime);
+        tanpuraGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        tanpuraOsc.connect(tanpuraGain);
+        tanpuraGain.connect(audioCtx.destination);
+        tanpuraOsc.start();
+      } catch (e) {}
+    }
+
+    function stopTanpuraDrone() {
+      if (tanpuraOsc) {
+        try { tanpuraOsc.stop(); } catch (e) {}
+        tanpuraOsc = null;
+      }
+    }
+
+    function stopAudio() {
+      if (cloudAudio) {
+        cloudAudio.pause();
+      }
+      if (window.activeAudioTimer) clearTimeout(window.activeAudioTimer);
+      if (streamTimer) clearInterval(streamTimer);
+      stopTanpuraDrone();
+      stopVisualizer();
+
+      const vinyl = document.getElementById('vinyl-disc');
+      if (vinyl) vinyl.classList.add('paused');
+      tapeWheelLeft.classList.add('paused');
+      tapeWheelRight.classList.add('paused');
+      
+      isPlaying = false;
+      playerToggleLabel.textContent = 'Play';
+    }
+
+    function playNextTrack() {
+      const currentList = getFilteredSongs();
+      if (currentList.length === 0) return;
+
+      if (isShuffle && currentList.length > 1) {
+        let randIdx;
+        const curIdx = currentList.findIndex(s => s.id === currentPlayingTrackId);
+        do {
+          randIdx = Math.floor(Math.random() * currentList.length);
+        } while (randIdx === curIdx && currentList.length > 1);
+        streamTrackAudio(currentList[randIdx]);
+        return;
+      }
+
+      const curIndex = currentList.findIndex(s => s.id === currentPlayingTrackId);
+      if (curIndex === -1) {
+        streamTrackAudio(currentList[0]);
+      } else {
+        const nextIndex = (curIndex + 1) % currentList.length;
+        streamTrackAudio(currentList[nextIndex]);
+      }
+    }
+
+    function playPrevTrack() {
+      const currentList = getFilteredSongs();
+      if (currentList.length === 0) return;
+
+      const curIndex = currentList.findIndex(s => s.id === currentPlayingTrackId);
+      if (curIndex <= 0) {
+        streamTrackAudio(currentList[currentList.length - 1]);
+      } else {
+        streamTrackAudio(currentList[curIndex - 1]);
+      }
+    }
+
+    function startVisualizer() {
+      if (visualizerAnimId) cancelAnimationFrame(visualizerAnimId);
+      function draw() {
+        if (!isPlaying) {
+          canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+          return;
+        }
+        canvasCtx.fillStyle = 'rgba(15, 23, 42, 0.3)';
+        canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const bars = 16;
+        const barWidth = canvas.width / bars;
+        for (let i = 0; i < bars; i++) {
+          const barHeight = Math.sin(Date.now() * 0.005 + i) * 12 + Math.random() * 10 + 4;
+          canvasCtx.fillStyle = `hsl(${220 + i * 8}, 85%, 65%)`;
+          canvasCtx.fillRect(i * barWidth, canvas.height - barHeight, barWidth - 2, barHeight);
+        }
+        visualizerAnimId = requestAnimationFrame(draw);
+      }
+      visualizerAnimId = requestAnimationFrame(draw);
+    }
+
+    function stopVisualizer() {
+      if (visualizerAnimId) cancelAnimationFrame(visualizerAnimId);
+      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // 8. EVENT LISTENERS
+    songList.addEventListener('click', (e) => {
+      const playBtn = e.target.closest('.play-track-btn');
+      if (playBtn) {
+        const id = parseInt(playBtn.getAttribute('data-play-id'), 10);
+        const song = songs.find(s => s.id === id);
+        if (song) {
+          if (isPlaying && currentPlayingTrackId === id) {
+            stopAudio();
+            render();
+          } else {
+            streamTrackAudio(song);
+          }
+        }
+        return;
+      }
+
+      const lyricsBtn = e.target.closest('.lyrics-toggle-btn');
+      if (lyricsBtn) {
+        const id = parseInt(lyricsBtn.getAttribute('data-lyrics-id'), 10);
+        const song = songs.find(s => s.id === id);
+        if (song) openLyricsModal(song);
+        return;
+      }
+
+      const addPlBtn = e.target.closest('.add-to-playlist-btn');
+      if (addPlBtn) {
+        const id = parseInt(addPlBtn.getAttribute('data-add-playlist-id'), 10);
+        const song = songs.find(s => s.id === id);
+        if (song) openAddToPlaylistModal(song);
+        return;
+      }
+
+      const favBtn = e.target.closest('.fav-toggle');
+      if (favBtn) {
+        const id = parseInt(favBtn.getAttribute('data-fav-id'), 10);
+        if (favoriteIds.has(id)) {
+          favoriteIds.delete(id);
+        } else {
+          favoriteIds.add(id);
+        }
+        try {
+          localStorage.setItem('hit_songs_favs', JSON.stringify(Array.from(favoriteIds)));
+        } catch (e) {}
+        render();
+        return;
+      }
+
+      const delBtn = e.target.closest('.delete-song-btn');
+      if (delBtn) {
+        const id = parseInt(delBtn.getAttribute('data-delete-id'), 10);
+        songs = songs.filter(s => s.id !== id);
+        favoriteIds.delete(id);
+        customPlaylists.forEach(pl => {
+          pl.songIds = pl.songIds.filter(sid => sid !== id);
+        });
+        try {
+          localStorage.setItem('hit_songs_collection', JSON.stringify(songs));
+          localStorage.setItem('hit_songs_favs', JSON.stringify(Array.from(favoriteIds)));
+          localStorage.setItem('hit_songs_custom_playlists', JSON.stringify(customPlaylists));
+        } catch (e) {}
+        if (currentPlayingTrackId === id) {
+          stopAudio();
+          nowPlayingBar.classList.add('translate-y-full');
+        }
+        populateDropdowns();
+        render();
+        return;
+      }
+    });
+
+    retroModeToggle.addEventListener('click', () => {
+      isRetroCassetteOpen = !isRetroCassetteOpen;
+      retroCassetteDeck.classList.toggle('hidden', !isRetroCassetteOpen);
+      retroModeLabel.textContent = isRetroCassetteOpen ? 'Close Cassette' : 'Cassette Mode';
+    });
+
+    tanpuraToggle.addEventListener('change', (e) => {
+      isTanpuraOn = e.target.checked;
+      if (isTanpuraOn && isPlaying) startTanpuraDrone();
+      else stopTanpuraDrone();
+    });
+
+    sleepTimerSelect.addEventListener('change', (e) => {
+      const minutes = parseInt(e.target.value, 10);
+      if (sleepTimerInterval) clearInterval(sleepTimerInterval);
+      if (minutes > 0) {
+        sleepSecondsRemaining = minutes * 60;
+        sleepTimerInterval = setInterval(() => {
+          sleepSecondsRemaining--;
+          if (sleepSecondsRemaining <= 0) {
+            clearInterval(sleepTimerInterval);
+            stopAudio();
+            nowPlayingBar.classList.add('translate-y-full');
+            sleepTimerSelect.value = "0";
+          }
+        }, 1000);
+      }
+    });
+
+    playbackSpeedSelect.addEventListener('change', (e) => {
+      playbackSpeed = parseFloat(e.target.value);
+      if (cloudAudio) cloudAudio.playbackRate = playbackSpeed;
+    });
+
+    moodPills.addEventListener('click', (e) => {
+      const btn = e.target.closest('.mood-btn');
+      if (!btn) return;
+      currentMood = btn.getAttribute('data-mood');
+      activeMoodIndicator.textContent = btn.textContent.trim();
+      updateMoodPillsUI();
+      render();
+    });
+
+    function updateMoodPillsUI() {
+      document.querySelectorAll('.mood-btn').forEach(b => {
+        const m = b.getAttribute('data-mood');
+        if (m === currentMood) {
+          b.className = 'mood-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow-sm transition-all';
+        } else {
+          b.className = 'mood-btn shrink-0 px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 transition-all';
+        }
+      });
+    }
+
+    toggleAddFormBtn.addEventListener('click', () => {
+      const isHidden = addSongPanel.classList.toggle('hidden');
+      toggleFormText.textContent = isHidden ? 'Add New Song' : 'Close Form';
+      if (!isHidden) titleInput.focus();
+    });
+
+    function addSong() {
+      const title = titleInput.value.trim();
+      const artist = artistInput.value.trim();
+      const actor = actorInput.value.trim() || 'Independent';
+      const year = parseInt(yearInput.value, 10) || new Date().getFullYear();
+
+      if (!title || !artist) {
+        errorMsg.classList.remove('hidden');
+        titleInput.focus();
+        return;
+      }
+      errorMsg.classList.add('hidden');
+
+      const newSong = {
+        id: Date.now(),
+        title,
+        singer: artist,
+        actor,
+        year,
+        movie: '',
+        searches: 85,
+        playlist: ["modern-chartbusters"],
+        mood: "highway",
+        ytId: "BddP6PYo2gs",
+        lyricsEn: `Sing along with ${title} by ${artist}!`,
+        lyricsHi: `${title} - ${artist} के साथ गाइए!`
+      };
+
+      songs.unshift(newSong);
+      try {
+        localStorage.setItem('hit_songs_collection', JSON.stringify(songs));
+      } catch (e) {}
+
+      titleInput.value = '';
+      artistInput.value = '';
+      actorInput.value = '';
+      yearInput.value = '';
+      addSongPanel.classList.add('hidden');
+      toggleFormText.textContent = 'Add New Song';
+
+      populateDropdowns();
+      render();
+    }
+
+    addBtn.addEventListener('click', addSong);
+
+    titleInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') artistInput.focus();
+    });
+    artistInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') addSong();
+    });
+
+    playlistTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.playlist-pill');
+      if (!btn) return;
+      document.querySelectorAll('.playlist-pill').forEach(b => {
+        b.classList.remove('bg-indigo-600', 'text-white', 'shadow-sm', 'font-semibold');
+        b.classList.add('bg-slate-900', 'text-slate-300', 'font-medium', 'border', 'border-slate-800');
+      });
+      btn.classList.add('bg-indigo-600', 'text-white', 'shadow-sm', 'font-semibold');
+      btn.classList.remove('bg-slate-900', 'text-slate-300', 'border', 'border-slate-800');
+
+      currentPlaylist = btn.getAttribute('data-playlist');
+      activePlaylistLabel.textContent = btn.textContent.trim();
+      render();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim();
+      render();
+    });
+
+    filterSinger.addEventListener('change', (e) => {
+      selectedSinger = e.target.value;
+      render();
+    });
+
+    filterActor.addEventListener('change', (e) => {
+      selectedActor = e.target.value;
+      render();
+    });
+
+    filterYear.addEventListener('change', (e) => {
+      selectedYear = e.target.value;
+      render();
+    });
+
+    function resetFilters() {
+      searchQuery = '';
+      currentMood = 'all';
+      selectedSinger = 'all';
+      selectedActor = 'all';
+      selectedYear = 'all';
+      searchInput.value = '';
+      filterSinger.value = 'all';
+      filterActor.value = 'all';
+      filterYear.value = 'all';
+      updateMoodPillsUI();
+      render();
+    }
+
+    resetFiltersBtn.addEventListener('click', resetFilters);
+    clearSearchBtn.addEventListener('click', resetFilters);
+
+    playerNextBtn.addEventListener('click', playNextTrack);
+    playerPrevBtn.addEventListener('click', playPrevTrack);
+
+    playerShuffleBtn.addEventListener('click', () => {
+      isShuffle = !isShuffle;
+      render();
+    });
+
+    playerRepeatBtn.addEventListener('click', () => {
+      if (repeatMode === 'off') repeatMode = 'all';
+      else if (repeatMode === 'all') repeatMode = 'one';
+      else repeatMode = 'off';
+      render();
+    });
+
+    playerStopBtn.addEventListener('click', () => {
+      stopAudio();
+      nowPlayingBar.classList.add('translate-y-full');
+      render();
+    });
+
+    playerToggleBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        stopAudio();
+      } else if (currentPlayingTrackId) {
+        const song = songs.find(s => s.id === currentPlayingTrackId);
+        if (song) streamTrackAudio(song);
+      } else {
+        const currentList = getFilteredSongs();
+        if (currentList.length > 0) streamTrackAudio(currentList[0]);
+      }
+      render();
+    });
+
+    playerProgress.addEventListener('input', (e) => {
+      const dur = (cloudAudio && !isNaN(cloudAudio.duration) && cloudAudio.duration > 0) ? cloudAudio.duration : 30;
+      const targetSec = (e.target.value / 100) * dur;
+      if (cloudAudio) cloudAudio.currentTime = targetSec;
+      currentSeconds = targetSec;
+    });
+
+    soundEqSelect.addEventListener('change', (e) => {
+      currentEqPreset = e.target.value;
+    });
+
+    playerLyricsBtn.addEventListener('click', () => {
+      if (currentPlayingTrackId) {
+        const song = songs.find(s => s.id === currentPlayingTrackId);
+        if (song) openLyricsModal(song);
+      } else {
+        const currentList = getFilteredSongs();
+        if (currentList.length > 0) openLyricsModal(currentList[0]);
+      }
+    });
+
+    function openLyricsModal(song) {
+      activeLyricsSong = song;
+      lyricsModalTitle.textContent = song.title;
+      lyricsModalArtist.textContent = `${song.singer} • ${song.movie || song.actor || 'Track'} (${song.year})`;
+      updateLyricsText();
+
+      const isCurrentPlaying = (isPlaying && currentPlayingTrackId === song.id);
+      lyricsSyncLabel.textContent = isCurrentPlaying ? "Currently Streaming" : "Stream & Sing";
+
+      lyricsModal.classList.remove('hidden');
+    }
+
+    function updateLyricsText() {
+      if (!activeLyricsSong) return;
+      if (lyricsScriptMode === 'hi' && activeLyricsSong.lyricsHi) {
+        lyricsModalBody.textContent = activeLyricsSong.lyricsHi;
+        lyricsModalBody.className = "text-base sm:text-lg font-medium text-slate-100 leading-relaxed devanagari whitespace-pre-line tracking-wide";
+        toggleScriptBtn.textContent = "Roman (EN)";
+      } else {
+        lyricsModalBody.textContent = activeLyricsSong.lyricsEn || activeLyricsSong.lyrics || "Sing along to this melody!";
+        lyricsModalBody.className = "text-base sm:text-lg font-medium text-slate-100 leading-relaxed italic whitespace-pre-line tracking-wide";
+        toggleScriptBtn.textContent = "देवनागरी (HI)";
+      }
+    }
+
+    toggleScriptBtn.addEventListener('click', () => {
+      lyricsScriptMode = (lyricsScriptMode === 'en') ? 'hi' : 'en';
+      updateLyricsText();
+    });
+
+    closeLyricsModalBtn.addEventListener('click', () => {
+      lyricsModal.classList.add('hidden');
+      activeLyricsSong = null;
+    });
+
+    lyricsPlaySyncBtn.addEventListener('click', () => {
+      if (activeLyricsSong) {
+        streamTrackAudio(activeLyricsSong);
+        lyricsSyncLabel.textContent = "Currently Streaming";
+      }
+    });
+
+    openCreatePlaylistBtn.addEventListener('click', () => {
+      playlistModal.classList.remove('hidden');
+      customPlaylistNameInput.focus();
+    });
+
+    function closePlaylistModal() {
+      playlistModal.classList.add('hidden');
+      createPlaylistForm.reset();
+    }
+
+    closePlaylistModalBtn.addEventListener('click', closePlaylistModal);
+    cancelPlaylistModalBtn.addEventListener('click', closePlaylistModal);
+
+    createPlaylistForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = customPlaylistNameInput.value.trim();
+      const emoji = customPlaylistEmojiInput.value;
+      if (!name) return;
+
+      const newPl = {
+        id: `cp_${Date.now()}`,
+        name,
+        emoji,
+        songIds: []
+      };
+
+      customPlaylists.push(newPl);
+      try {
+        localStorage.setItem('hit_songs_custom_playlists', JSON.stringify(customPlaylists));
+      } catch (err) {}
+
+      closePlaylistModal();
+      currentPlaylist = newPl.id;
+      render();
+    });
+
+    function openAddToPlaylistModal(song) {
+      targetSongForPlaylist = song;
+      targetSongTitleLabel.textContent = `"${song.title}" - ${song.singer}`;
+      
+      customPlaylistsSelectorList.innerHTML = '';
+      if (customPlaylists.length === 0) {
+        noCustomPlaylistsMsg.classList.remove('hidden');
+      } else {
+        noCustomPlaylistsMsg.classList.add('hidden');
+        customPlaylists.forEach(pl => {
+          const isIncluded = pl.songIds.includes(song.id);
+          const item = document.createElement('label');
+          item.className = 'flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 cursor-pointer text-xs';
+          item.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="text-base">${pl.emoji}</span>
+              <span class="font-medium text-white">${escapeHtml(pl.name)}</span>
+            </div>
+            <input 
+              type="checkbox" 
+              data-playlist-id="${pl.id}" 
+              ${isIncluded ? 'checked' : ''}
+              class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500 bg-slate-900 border-slate-700"
+            >
+          `;
+          
+          item.querySelector('input').addEventListener('change', (ev) => {
+            if (ev.target.checked) {
+              if (!pl.songIds.includes(song.id)) pl.songIds.push(song.id);
+            } else {
+              pl.songIds = pl.songIds.filter(id => id !== song.id);
+            }
+            try {
+              localStorage.setItem('hit_songs_custom_playlists', JSON.stringify(customPlaylists));
+            } catch (err) {}
+            renderCustomPlaylistTabs();
+          });
+
+          customPlaylistsSelectorList.appendChild(item);
+        });
+      }
+
+      addToPlaylistModal.classList.remove('hidden');
+    }
+
+    function closeAddToPlaylist() {
+      addToPlaylistModal.classList.add('hidden');
+      targetSongForPlaylist = null;
+      render();
+    }
+
+    closeAddToPlaylistBtn.addEventListener('click', closeAddToPlaylist);
+    doneAddToPlaylistBtn.addEventListener('click', closeAddToPlaylist);
+
+    shareActivePlaylistBtn.addEventListener('click', () => {
+      const activeList = getFilteredSongs();
+      let playlistTitle = 'SwarCloud Hit Tracks';
+      if (currentPlaylist === 'favorites') playlistTitle = 'My Favorite Tracks';
+      else if (currentPlaylist.startsWith('cp_')) {
+        const found = customPlaylists.find(p => p.id === currentPlaylist);
+        if (found) playlistTitle = `${found.emoji} ${found.name}`;
+      } else {
+        playlistTitle = activePlaylistLabel.textContent.trim();
+      }
+
+      sharePlaylistName.textContent = `${playlistTitle} (${activeList.length} tracks)`;
+
+      let textContent = `🎶 SwarCloud Music: ${playlistTitle}\n`;
+      textContent += `Total Tracks: ${activeList.length}\n`;
+      textContent += `Streaming 100% Free on SwarCloud • 0 MB storage used\n\n`;
+
+      activeList.forEach((s, idx) => {
+        textContent += `${idx + 1}. "${s.title}" - ${s.singer} (${s.actor || 'Classic'}, ${s.year})\n`;
+      });
+
+      shareTextArea.value = textContent;
+      copyBtnText.textContent = 'Copy Tracklist';
+      shareModal.classList.remove('hidden');
+    });
+
+    closeShareModalBtn.addEventListener('click', () => {
+      shareModal.classList.add('hidden');
+    });
+
+    copyShareBtn.addEventListener('click', () => {
+      shareTextArea.select();
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(shareTextArea.value);
+        } else {
+          document.execCommand('copy');
+        }
+      } catch (err) {
+        document.execCommand('copy');
+      }
+      copyBtnText.textContent = 'Copied to Clipboard!';
+      setTimeout(() => {
+        copyBtnText.textContent = 'Copy Tracklist';
+      }, 2500);
+    });
+
+    
+    // Universal On-Demand Streaming for ANY song
+    const universalSongInput = document.getElementById('universal-song-input');
+    const universalStreamBtn = document.getElementById('universal-stream-btn');
+
+    function streamAnyUniversalSong(query) {
+      if (!query) return;
+      const qLower = query.toLowerCase();
+      let match = songs.find(s => s.title.toLowerCase().includes(qLower) || s.singer.toLowerCase().includes(qLower));
+
+      if (match) {
+        streamTrackAudio(match);
+        return;
+      }
+
+      const newTrack = {
+        id: Date.now(),
+        title: query,
+        singer: "Cloud Master Artist",
+        actor: "Studio Original",
+        year: new Date().getFullYear(),
+        movie: "Universal Cloud",
+        searches: 99,
+        playlist: ["most-searched", "modern-chartbusters"],
+        mood: "highway",
+        ytQuery: query,
+        lyricsEn: `Sing along to: ${query}!`,
+        lyricsHi: `${query} - मूल स्टूडियो गायन!`
+      };
+
+      songs.unshift(newTrack);
+      try {
+        localStorage.setItem('hit_songs_collection', JSON.stringify(songs));
+      } catch (e) {}
+
+      populateDropdowns();
+      streamTrackAudio(newTrack);
+      render();
+    }
+
+    if (universalStreamBtn) {
+      universalStreamBtn.addEventListener('click', () => {
+        const q = universalSongInput.value.trim();
+        if (q) {
+          streamAnyUniversalSong(q);
+          universalSongInput.value = '';
+        }
+      });
+    }
+
+    if (universalSongInput) {
+      universalSongInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const q = universalSongInput.value.trim();
+          if (q) {
+            streamAnyUniversalSong(q);
+            universalSongInput.value = '';
+          }
+        }
+      });
+    }
+
+    // Initial load
+    populateDropdowns();
+    render();
+  </script>
+</body>
+</html>
