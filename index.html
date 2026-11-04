@@ -41,9 +41,9 @@
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen pb-40 antialiased selection:bg-indigo-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen pb-44 antialiased selection:bg-indigo-500 selection:text-white">
 
-  <!-- Audio Element for Cloud Audio Streaming -->
+  <!-- Audio Element for Cloud Audio Streaming Fallback -->
   <audio id="cloud-audio-player" preload="none"></audio>
 
   <!-- Sticky Top Navigation / Header -->
@@ -61,12 +61,12 @@
             <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
               <span class="brand-font tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-rose-200 to-indigo-300">SwarCloud</span>
             </h1>
-            <span class="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 flex items-center gap-1">
+            <span class="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Independent Cloud
+              Original Master Vocals
             </span>
           </div>
-          <p class="text-xs text-slate-400">Pure Indian & Global Melody &bull; 100% Free &bull; Zero Storage Used</p>
+          <p class="text-xs text-slate-400">Stream original studio recordings &bull; 100% Free &bull; Zero storage</p>
         </div>
       </div>
 
@@ -76,7 +76,7 @@
           id="retro-mode-toggle" 
           type="button" 
           class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all"
-          title="Toggle Nostalgic Cassette Tape Mode"
+          title="Toggle Visual Player Deck"
         >
           <span>📼</span>
           <span id="retro-mode-label">Cassette Mode</span>
@@ -114,51 +114,59 @@
 
   <main class="max-w-6xl mx-auto px-4 sm:px-6 pt-5">
 
-    <!-- Retro Cassette Tape Player Experience (Unique Standout Feature) -->
-    <div id="retro-cassette-deck" class="hidden mb-6 bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-5 shadow-2xl relative overflow-hidden">
+    <!-- Active Cloud Stream Visual Deck & Cassette Experience -->
+    <div id="retro-cassette-deck" class="mb-6 bg-gradient-to-br from-amber-950/60 via-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-5 shadow-2xl relative overflow-hidden">
       <div class="flex items-center justify-between mb-3 border-b border-amber-500/20 pb-2">
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-          <span class="text-xs font-bold uppercase tracking-widest text-amber-300 font-mono">STEREO CASSETTE DECK &bull; HI-FI CLOUD SOUND</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-300 font-mono">SWARCLOUD MASTER STREAM &bull; ORIGINAL STUDIO AUDIO</span>
         </div>
-        <span class="text-[11px] font-mono text-amber-400/80 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">SIDE A</span>
+        <span class="text-[11px] font-mono text-emerald-400/90 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">ONLINE STREAM</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-        <!-- Visual Tape Spools -->
-        <div class="md:col-span-2 bg-slate-950/90 border border-amber-500/30 rounded-2xl p-4 flex items-center justify-around relative">
+        <!-- Visual Deck with Embedded Master Stream -->
+        <div class="md:col-span-2 bg-slate-950/90 border border-amber-500/30 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-around gap-4 relative">
+          
           <!-- Left Reel -->
-          <div class="relative w-20 h-20 rounded-full border-4 border-slate-700 bg-slate-900 flex items-center justify-center shadow-inner">
-            <div id="tape-wheel-left" class="tape-spin-left paused w-14 h-14 rounded-full border-2 border-dashed border-amber-400/70 flex items-center justify-center">
-              <div class="w-4 h-4 rounded-full bg-amber-300"></div>
+          <div class="hidden sm:flex relative w-16 h-16 rounded-full border-4 border-slate-700 bg-slate-900 items-center justify-center shadow-inner shrink-0">
+            <div id="tape-wheel-left" class="tape-spin-left paused w-11 h-11 rounded-full border-2 border-dashed border-amber-400/70 flex items-center justify-center">
+              <div class="w-3 h-3 rounded-full bg-amber-300"></div>
             </div>
           </div>
 
-          <!-- Middle Tape Window with Spectrum Canvas -->
-          <div class="flex-1 max-w-[200px] mx-3 text-center">
-            <canvas id="visualizer-canvas" class="w-full h-12 bg-slate-900/90 rounded-lg border border-slate-800 shadow-inner"></canvas>
-            <p id="cassette-song-label" class="text-xs font-bold text-amber-200 mt-1 truncate">Ready to stream</p>
-            <p id="cassette-artist-label" class="text-[10px] text-slate-400 truncate">Select any track</p>
+          <!-- Studio Player Screen (Original Audio Stream) -->
+          <div class="w-full flex-1 max-w-sm rounded-xl overflow-hidden bg-black border border-slate-800 shadow-2xl relative aspect-video flex items-center justify-center">
+            <div id="yt-player-container" class="w-full h-full">
+              <div id="yt-player" class="w-full h-full"></div>
+            </div>
+            <!-- Overlay Placeholder before stream starts -->
+            <div id="player-screen-overlay" class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-slate-950/70 flex flex-col items-center justify-center p-4 text-center">
+              <span class="text-3xl mb-2">🎶</span>
+              <p id="cassette-song-label" class="text-sm font-bold text-amber-200 truncate max-w-xs">Tap Any Song to Stream</p>
+              <p id="cassette-artist-label" class="text-xs text-slate-400 truncate max-w-xs">Original Vocals & Master Track</p>
+            </div>
           </div>
 
           <!-- Right Reel -->
-          <div class="relative w-20 h-20 rounded-full border-4 border-slate-700 bg-slate-900 flex items-center justify-center shadow-inner">
-            <div id="tape-wheel-right" class="tape-spin-right paused w-14 h-14 rounded-full border-2 border-dashed border-amber-400/70 flex items-center justify-center">
-              <div class="w-4 h-4 rounded-full bg-amber-300"></div>
+          <div class="hidden sm:flex relative w-16 h-16 rounded-full border-4 border-slate-700 bg-slate-900 items-center justify-center shadow-inner shrink-0">
+            <div id="tape-wheel-right" class="tape-spin-right paused w-11 h-11 rounded-full border-2 border-dashed border-amber-400/70 flex items-center justify-center">
+              <div class="w-3 h-3 rounded-full bg-amber-300"></div>
             </div>
           </div>
         </div>
 
-        <!-- Tanpura / Acoustic Drone Controls -->
+        <!-- Ambience & Sleep Controls -->
         <div class="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-col justify-between h-full">
           <div>
+            <canvas id="visualizer-canvas" class="w-full h-10 bg-slate-950 rounded-lg border border-slate-800 mb-3"></canvas>
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs font-bold text-white flex items-center gap-1.5">
-                <span>🪕</span> Tanpura Drone Ambience
+                <span>🪕</span> Tanpura Drone Layer
               </span>
               <input type="checkbox" id="tanpura-toggle" class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
             </div>
-            <p class="text-[11px] text-slate-400">Layer gentle Indian classical acoustic resonance behind current track.</p>
+            <p class="text-[11px] text-slate-400">Add acoustic Tanpura resonance behind original vocals.</p>
           </div>
           <div class="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
             <span class="text-slate-400">Sleep Timer:</span>
@@ -174,7 +182,42 @@
       </div>
     </div>
 
-    <!-- Mood Tuner (Instantly match emotion: Romantic, Night Drive, Workout, Peace, Baaraat) -->
+    
+    <!-- Universal Cloud Song Search (Access 100M+ Songs Online) -->
+    <section class="mb-5 bg-gradient-to-r from-indigo-950/80 via-slate-900 to-purple-950/80 border border-indigo-500/40 rounded-2xl p-4 shadow-xl">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-2">
+        <div>
+          <h2 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+            <span>🌐 Universal Cloud Search & Stream</span>
+            <span class="text-[10px] font-normal px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100M+ Songs Online</span>
+          </h2>
+          <p class="text-[11px] text-slate-300">Can't find a song below? Type ANY song, singer, or movie to stream its original recording immediately.</p>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2">
+        <div class="relative flex-1">
+          <input 
+            type="text" 
+            id="universal-song-input" 
+            placeholder="Type ANY song in the world (e.g. Pasoori, Naatu Naatu, Arjan Vailly, Shanta Bai...)" 
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 pl-10 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-inner"
+          >
+          <svg class="w-4 h-4 text-indigo-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <button 
+          id="universal-stream-btn" 
+          type="button" 
+          class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 active:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 transition-all shrink-0"
+        >
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span>Stream Any Song</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Mood Tuner (Instantly match emotion) -->
     <section class="mb-5 bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 rounded-2xl p-3.5">
       <div class="flex items-center justify-between mb-2 px-1">
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -737,52 +780,1000 @@
   </div>
 
   <script>
-    // 1. ALL-TIME HIT SONGS DATABASE WITH MOOD TAGS & DUAL SCRIPT LYRICS
+    // 1. ALL-TIME HIT SONGS DATABASE WITH MASTER YOUTUBE STREAM IDS
     const INITIAL_SONGS = [
-      // Hindi Classics & Modern Chartbusters
-      { id: 1, title: "Kesariya", singer: "Arijit Singh", actor: "Ranbir Kapoor", year: 2022, movie: "Brahmāstra", searches: 98, playlist: ["most-searched", "modern-chartbusters"], mood: "monsoon", lyricsEn: "Kesariya tera ishq hai piya\nRang jaaun jo main haath lagaaun\nDin beete saara teri fikr mein\nRain saari teri khair manaun...", lyricsHi: "केसरिया तेरा इश्क़ है पिया\nरंग जाऊं जो मैं हाथ लगाऊं\nदिन बीते सारा तेरी फ़िक्र में\nरैन सारी तेरी खैर मनाऊं..." },
-      { id: 2, title: "Tum Hi Ho", singer: "Arijit Singh", actor: "Aditya Roy Kapur", year: 2013, movie: "Aashiqui 2", searches: 99, playlist: ["most-searched", "modern-chartbusters"], mood: "monsoon", lyricsEn: "Hum tere bin ab reh nahi sakte\nTere bina kya wajood mera...\nKyunki tum hi ho, ab tum hi ho\nZindagi ab tum hi ho!", lyricsHi: "हम तेरे बिन अब रह नहीं सकते\nतेरे बिना क्या वजूद मेरा...\nक्योंकि तुम ही हो, अब तुम ही हो\nज़िंदगी अब तुम ही हो!" },
-      { id: 3, title: "Kal Ho Naa Ho", singer: "Sonu Nigam", actor: "Shah Rukh Khan", year: 2003, movie: "Kal Ho Naa Ho", searches: 95, playlist: ["most-searched", "2000s-classics"], mood: "peace", lyricsEn: "Har ghadi badal rahi hai roop zindagi\nChhaanv hai kabhi kabhi hai dhoop zindagi\nHar pal yahan jee bhar jiyo\nJo hai samaa, kal ho naa ho!", lyricsHi: "हर घड़ी बदल रही है रूप ज़िंदगी\nछांव है कभी कभी है धूप ज़िंदगी\nहर पल यहाँ जी भर जियो\nजो है समां, कल हो ना हो!" },
-      { id: 4, title: "Chaiyya Chaiyya", singer: "Sukhwinder Singh", actor: "Shah Rukh Khan", year: 1998, movie: "Dil Se..", searches: 94, playlist: ["90s-magic"], mood: "energy", lyricsEn: "Jinke sar ho ishq ki chaaon\nPaaon ke neeche jannat hogi\nChal chaiyya chaiyya chaiyya chaiyya\nSaare ishq ki chaaon chal chaiyya chaiyya!", lyricsHi: "जिनके सर हो इश्क़ की छांव\nपांव के नीचे जन्नत होगी\nचल छैंया छैंया छैंया छैंया\nसारे इश्क़ की छांव चल छैंया छैंया!" },
-      { id: 5, title: "Pal Pal Dil Ke Paas", singer: "Kishore Kumar", actor: "Dharmendra", year: 1973, movie: "Blackmail", searches: 96, playlist: ["golden-era"], mood: "highway", lyricsEn: "Pal pal dil ke paas tum rehti ho\nJeevan meethi pyaas yeh kehti ho\nHar shaam aankhon par tera aanchal lehraye\nHar raat yaadon ki baarat le aaye...", lyricsHi: "पल पल दिल के पास तुम रहती हो\nजीवन मीठी प्यास यह कहती हो\nहर शाम आँखों पर तेरा आँचल लहराए\nहर रात यादों की बारात ले आए..." },
-      { id: 6, title: "Tere Jaisa Yaar Kahan", singer: "Kishore Kumar", actor: "Amitabh Bachchan", year: 1981, movie: "Yaarana", searches: 93, playlist: ["golden-era"], mood: "peace", lyricsEn: "Tere jaisa yaar kahan\nKahan aisa yaarana\nYaad karegi duniya\nTera mera afsana!", lyricsHi: "तेरे जैसा यार कहाँ\nकहाँ ऐसा याराना\nयाद करेगी दुनिया\nतेरा मेरा अफ़साना!" },
-      { id: 7, title: "Lag Ja Gale", singer: "Lata Mangeshkar", actor: "Sadhana", year: 1964, movie: "Woh Kaun Thi?", searches: 99, playlist: ["most-searched", "golden-era"], mood: "monsoon", lyricsEn: "Lag ja gale ke phir yeh haseen raat ho na ho\nShaayad phir is janam mein mulaaqaat ho na ho\nHumko mili hain aaj yeh ghadiyaan naseeb se\nJee bhar ke dekh lijiye humko qareeb se...", lyricsHi: "लग जा गले कि फिर ये हसीं रात हो न हो\nशायद फिर इस जनम में मुलाक़ात हो न हो\nहमको मिली हैं आज ये घड़ियाँ नसीब से\nजी भर के देख लीजिए हमको क़रीब से..." },
-      { id: 8, title: "Tujhe Dekha Toh", singer: "Kumar Sanu & Lata Mangeshkar", actor: "Shah Rukh Khan", year: 1995, movie: "DDLJ", searches: 98, playlist: ["most-searched", "90s-magic"], mood: "monsoon", lyricsEn: "Tujhe dekha toh yeh jaana sanam\nPyaar hota hai deewana sanam\nAb yahan se kahan jaayein hum\nTeri baahon mein mar jaayein hum!", lyricsHi: "तुझे देखा तो ये जाना सनम\nप्यार होता है दीवाना सनम\nअब यहाँ से कहाँ जाएँ हम\nतेरी बाहों में मर जाएँ हम!" },
-      { id: 9, title: "Channa Mereya", singer: "Arijit Singh", actor: "Ranbir Kapoor", year: 2016, movie: "Ae Dil Hai Mushkil", searches: 97, playlist: ["most-searched", "modern-chartbusters"], mood: "peace", lyricsEn: "Acha chalta hoon, duaon mein yaad rakhna\nMere zikr ka zubaan pe swaad rakhna\nAndhera tera maine le liya\nMera ujla sitaara tere naam kiya...", lyricsHi: "अच्छा चलता हूँ दुआओं में याद रखना\nमेरे ज़िक्र का ज़ुबाँ पे स्वाद रखना\nअँधेरा तेरा मैंने ले लिया\nमेरा उजला सितारा तेरे नाम किया..." },
-      { id: 10, title: "Dil Diyan Gallan", singer: "Atif Aslam", actor: "Salman Khan", year: 2017, movie: "Tiger Zinda Hai", searches: 92, playlist: ["modern-chartbusters"], mood: "highway", lyricsEn: "Dil diyan gallan karange naal naal behke\nAkh naale akh nu milaake\nRoz badhe sitare gin gin raat katan main\nTujhe dekh ke saans le paawaan...", lyricsHi: "दिल दियाँ गल्लां करांगे नाल नाल बहके\nअख नाले अख नु मिलाके\nरोज़ बधे सितारे गिन गिन रात कटन मैं\nतुझे देख के सांस ले पावां..." },
-      { id: 11, title: "Pehla Nasha", singer: "Udit Narayan", actor: "Aamir Khan", year: 1992, movie: "Jo Jeeta Wohi Sikandar", searches: 93, playlist: ["90s-magic"], mood: "monsoon", lyricsEn: "Pehla nasha, pehla khumaar\nNaya pyaar hai, naya intezaar\nKar loon main kya apna haal\nAe dil-e-beqaraar, mere dil-e-beqaraar!", lyricsHi: "पहला नशा पहला खुमार\nनया प्यार है नया इंतज़ार\nकर लूँ मैं क्या अपना हाल\nऐ दिल-ए-बेकरार मेरे दिल-ए-बेकरार!" },
-      { id: 12, title: "Khaike Paan Banaraswala", singer: "Kishore Kumar", actor: "Amitabh Bachchan", year: 1978, movie: "Don", searches: 95, playlist: ["golden-era"], mood: "baaraat", lyricsEn: "Khaike paan banaraswala\nKhul jaaye band aqal ka taala\nPhir to aisa kare kamaal\nSeedhi kar de sabki chaal!", lyricsHi: "खईके पान बनारस वाला\nखुल जाए बंद अक्ल का ताला\nफिर तो ऐसा करे कमाल\nसीधी कर दे सबकी चाल!" },
-      { id: 13, title: "Yeh Shaam Mastani", singer: "Kishore Kumar", actor: "Rajesh Khanna", year: 1971, movie: "Kati Patang", searches: 91, playlist: ["golden-era"], mood: "highway", lyricsEn: "Yeh shaam mastani, madhosh kiye jaaye\nMujhe dor koi kheenche, teri ore liye jaaye...", lyricsHi: "ये शाम मस्तानी मदहोश किये जाए\nमुझे डोर कोई खींचे तेरी ओर लिए जाए..." },
-      { id: 14, title: "Roop Tera Mastana", singer: "Kishore Kumar", actor: "Rajesh Khanna", year: 1969, movie: "Aradhana", searches: 90, playlist: ["golden-era"], mood: "highway", lyricsEn: "Roop tera mastana, pyaar mera deewana\nBhool koi humse na ho jaaye\nRaat nasheeli, mast sama hai\nAaj nashe mein saara jahan hai...", lyricsHi: "रूप तेरा मस्ताना प्यार मेरा दीवाना\nभूल कोई हमसे ना हो जाए..." },
-      { id: 15, title: "Agar Tum Saath Ho", singer: "Alka Yagnik & Arijit Singh", actor: "Ranbir Kapoor", year: 2015, movie: "Tamasha", searches: 98, playlist: ["most-searched", "modern-chartbusters"], mood: "monsoon", lyricsEn: "Pal bhar thehar jaao, dil yeh sambhal jaaye\nKaise tumhe roka karoon\nAgar tum saath ho...", lyricsHi: "पल भर ठहर जाओ दिल ये संभल जाए\nकैसे तुम्हें रोका करूँ\nअगर तुम साथ हो..." },
-      { id: 16, title: "Ghungroo", singer: "Arijit Singh & Shilpa Rao", actor: "Hrithik Roshan", year: 2019, movie: "War", searches: 91, playlist: ["modern-chartbusters"], mood: "baaraat", lyricsEn: "Kyun lamhe kharaab karein\nAa galti behisaab karein\nGhungroo toot gaye, naachungi main poori raat!", lyricsHi: "क्यों लम्हे खराब करें\nआ गलती बेहिसाब करें\nघुँघरू टूट गए, नाचूँगी मैं पूरी रात!" },
-      { id: 17, title: "Senorita", singer: "Farhan Akhtar & Hrithik Roshan", actor: "Hrithik Roshan", year: 2011, movie: "ZNMD", searches: 89, playlist: ["modern-chartbusters"], mood: "highway", lyricsEn: "Kaisi hai yeh rut ke jisme phool banke\nKhil rahi hai zindagani\nSenorita, jo bhi pal beetein hain unhein jee lo khul ke...", lyricsHi: "कैसी है ये रुत के जिसमें फूल बनके\nखिल रही है ज़िंदगानी\nसेनोरिटा, जो भी पल बीतें हैं उन्हें जी लो खुल के..." },
-      { id: 18, title: "Zara Sa", singer: "KK", actor: "Emraan Hashmi", year: 2008, movie: "Jannat", searches: 94, playlist: ["2000s-classics"], mood: "highway", lyricsEn: "Zara sa dil mein de jagah tu\nZara sa apna le bana\nZara sa khwaabon mein saja tu\nZara sa yaadon mein basa...", lyricsHi: "ज़रा सा दिल में दे जगह तू\nज़रा सा अपना ले बना\nज़रा सा ख्वाबों में सजा तू\nज़रा सा यादों में बसा..." },
-      { id: 19, title: "Tum Se Hi", singer: "Mohit Chauhan", actor: "Shahid Kapoor", year: 2007, movie: "Jab We Met", searches: 95, playlist: ["most-searched", "2000s-classics"], mood: "monsoon", lyricsEn: "Aadha sa vaada, aadhe se zyaada\nAane laga hai gumaan\nTum se hi din hota hai\nSurmayi shaam aati hai, tum se hi...", lyricsHi: "आधा सा वादा आधे से ज़्यादा\nआने लगा है गुमान\nतुम से ही दिन होता है\nसुरमई शाम आती है तुम से ही..." },
-      { id: 20, title: "Kaho Naa Pyaar Hai", singer: "Lucky Ali & Alka Yagnik", actor: "Hrithik Roshan", year: 2000, movie: "Kaho Naa... Pyaar Hai", searches: 92, playlist: ["2000s-classics"], mood: "baaraat", lyricsEn: "Dil mera har baar yeh sunne ko beqaraar hai\nKaho naa pyaar hai, kaho naa pyaar hai!", lyricsHi: "दिल मेरा हर बार ये सुनने को बेकरार है\nकहो ना प्यार है, कहो ना प्यार है!" },
-      { id: 21, title: "Kya Hua Tera Wada", singer: "Mohammed Rafi", actor: "Rishi Kapoor", year: 1977, movie: "Hum Kisise Kum Naheen", searches: 93, playlist: ["golden-era"], mood: "peace", lyricsEn: "Kya hua tera wada, woh qasam, woh iraada\nBhoolega dil jis din tumhe\nWoh din zindagi ka aakhri din hoga!", lyricsHi: "क्या हुआ तेरा वादा वो कसम वो इरादा\nभूलेगा दिल जिस दिन तुम्हें\nवो दिन ज़िंदगी का आख़िरी दिन होगा!" },
-      { id: 22, title: "Tere Naam", singer: "Udit Narayan", actor: "Salman Khan", year: 2003, movie: "Tere Naam", searches: 90, playlist: ["2000s-classics"], mood: "peace", lyricsEn: "Tere naam humne kiya hai jeevan apna saara sanam\nPyaar bahut karte hain tumse, ishq hai tu hamara sanam...", lyricsHi: "तेरे नाम हमने किया है जीवन अपना सारा सनम\nप्यार बहुत करते हैं तुमसे, इश्क़ है तू हमारा सनम..." },
-      { id: 23, title: "Mitwa", singer: "Shafqat Amanat Ali", actor: "Shah Rukh Khan", year: 2006, movie: "KANK", searches: 90, playlist: ["2000s-classics"], mood: "peace", lyricsEn: "Jaane kyun hai khoya khoya dil\nJaane kyun hai uljha uljha dil\nMitwa, kahe dhadkanein tujhse kya...", lyricsHi: "जाने क्यों है खोया खोया दिल\nजाने क्यों है उलझा उलझा दिल\nमितवा, कहे धड़कनें तुझसे क्या..." },
-      { id: 24, title: "Apna Bana Le", singer: "Arijit Singh", actor: "Varun Dhawan", year: 2022, movie: "Bhediya", searches: 97, playlist: ["most-searched", "modern-chartbusters"], mood: "monsoon", lyricsEn: "Tu mera koi na hoke bhi kuch laage\nKiya re jo bhi toone, kaise kiya re\nApna bana le piya, apna bana le...", lyricsHi: "तू मेरा कोई ना होके भी कुछ लागे\nकिया रे जो भी तूने कैसे किया रे\nअपना बना ले पिया अपना बना ले..." },
-      { id: 25, title: "O Maahi", singer: "Arijit Singh", actor: "Shah Rukh Khan", year: 2023, movie: "Dunki", searches: 96, playlist: ["most-searched", "modern-chartbusters"], mood: "highway", lyricsEn: "O maahi o maahi, tere ishq mein behta jaaun\nTu dhoop hai meri, tu chhaanv hai meri...", lyricsHi: "ओ माही ओ माही, तेरे इश्क़ में बहता जाऊं\nतू धूप है मेरी, तू छांव है मेरी..." },
-      { id: 26, title: "Teri Mitti", singer: "B Praak", actor: "Akshay Kumar", year: 2019, movie: "Kesari", searches: 95, playlist: ["modern-chartbusters"], mood: "peace", lyricsEn: "Teri mitti mein mil jaawaan\nGul banke main khil jaawaan\nItni si hai dil ki aarzoo\nTeri nadiyon mein beh jaawaan...", lyricsHi: "तेरी मिट्टी में मिल जावां\nगुल बनके मैं खिल जावां\nइतनी सी है दिल की आरज़ू\nतेरी नदियों में बह जावां..." },
-      { id: 27, title: "Raataan Lambiyan", singer: "Jubin Nautiyal", actor: "Sidharth Malhotra", year: 2021, movie: "Shershaah", searches: 96, playlist: ["most-searched", "modern-chartbusters"], mood: "monsoon", lyricsEn: "Kaate kate na re raataan lambiyan lambiyan re\nKare ghamzada meri aankhon ko\nChamke taare jab aasmaan mein...", lyricsHi: "काटे कटे ना रे रातां लम्बियाँ लम्बियाँ रे\nकरे ग़मज़दा मेरी आँखों को\nचमके तारे जब आसमाँ में..." },
-      { id: 28, title: "Aankh Marey", singer: "Neha Kakkar & Mika Singh", actor: "Ranveer Singh", year: 2018, movie: "Simmba", searches: 88, playlist: ["modern-chartbusters"], mood: "energy", lyricsEn: "Ho ladki aankh marey, aankh marey!\nSeeti bajaye, beech sadak pe\nNakhre dikhaye saare jahan ko...", lyricsHi: "हो लड़की आँख मारे, आँख मारे!\nसीटी बजाए बीच सड़क पे..." },
-      { id: 29, title: "Chura Liya Hai Tumne", singer: "Mohammed Rafi & Asha Bhosle", actor: "Zeenat Aman", year: 1973, movie: "Yaadon Ki Baaraat", searches: 94, playlist: ["golden-era"], mood: "highway", lyricsEn: "Chura liya hai tumne jo dil ko\nNazar nahi churaana sanam\nBadalke meri tum zindagani\nKahin badal na jaana sanam...", lyricsHi: "चुरा लिया है तुमने जो दिल को\nनज़र नहीं चुराना सनम\nबदल के मेरी तुम ज़िंदगानी\nकहीं बदल ना जाना सनम..." },
-      { id: 30, title: "Deewani Mastani", singer: "Shreya Ghoshal", actor: "Deepika Padukone", year: 2015, movie: "Bajirao Mastani", searches: 91, playlist: ["modern-chartbusters"], mood: "baaraat", lyricsEn: "Nabhatun aali apsara, aali apsara...\nMash-hoor mere ishq ki kahani ho gayi\nDeewani haan deewani, deewani ho gayi...", lyricsHi: "नभातून आली अप्सरा, आली अप्सरा...\nमशहूर मेरे इश्क़ की कहानी हो गयी\nदीवानी हाँ दीवानी, दीवानी हो गयी..." },
-      
-      // Standout Regional Hits (Maharashtra Pride & Dhol Chartbusters)
-      { id: 31, title: "Zingaat", singer: "Ajay-Atul", actor: "Akash Thosar & Rinku Rajguru", year: 2016, movie: "Sairat", searches: 99, playlist: ["most-searched", "modern-chartbusters"], mood: "energy", lyricsEn: "Usarat gaani baaraat naache\nZingaat zingaat zing zing zingaat!\nKaalijat ghusli tu jivaat gaath...", lyricsHi: "उसात गाणी बारात नाचे\nझिंगाट झिंगाट झिंग झिंग झिंगाट!\nकाळजात घुसली तू जीवात गाठ..." },
-      { id: 32, title: "Apsara Aali", singer: "Bela Shende & Ajay-Atul", actor: "Sonalee Kulkarni", year: 2010, movie: "Natarang", searches: 96, playlist: ["most-searched", "modern-chartbusters"], mood: "marathi", lyricsEn: "Apsara aali indrachi nagari sodun\nGhungroo baandhoon paayi rani naache chham chham...", lyricsHi: "अप्सरा आली इंद्राची नगरी सोडून\nघुंगरू बांधून पायी राणी नाचे छम छम..." },
-      { id: 33, title: "Yad Lagla", singer: "Ajay Gogavale", actor: "Akash Thosar", year: 2016, movie: "Sairat", searches: 95, playlist: ["modern-chartbusters"], mood: "monsoon", lyricsEn: "Yad lagla ga yad lagla ga\nJeev ha maaza tula bhidala\nKaalij maaza tula jadala...", lyricsHi: "याड लागलं गं याड लागलं गं\nजीव हा माझा तुला भिडला\nकाळिज माझा तुला जडला..." },
-      { id: 34, title: "Man Udhan Varyache", singer: "Shankar Mahadevan", actor: "Makarand Anaspure", year: 2006, movie: "Agabai Arechha", searches: 94, playlist: ["2000s-classics"], mood: "highway", lyricsEn: "Man udhan varyache, ghei roop he ranache\nKshanat hasave kshanat radave\nKshanat he baware vaave...", lyricsHi: "मन उधाण वाऱ्याचे, घेई रूप हे रानाचे\nक्षणात हसावे क्षणात रडावे\nक्षणात हे बावरे व्हावे..." }
-    ];
+  {
+    "id": 1,
+    "title": "Kesariya",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2022,
+    "movie": "Brahmāstra",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "BddP6PYo2gs",
+    "lyricsEn": "Kesariya tera ishq hai piya\nRang jaaun jo main haath lagaaun\nDin beete saara teri fikr mein\nRain saari teri khair manaun...",
+    "lyricsHi": "केसरिया तेरा इश्क़ है पिया\nरंग जाऊं जो मैं हाथ लगाऊं\nदिन बीते सारा तेरी फ़िक्र में\nरैन सारी तेरी खैर मनाऊं..."
+  },
+  {
+    "id": 2,
+    "title": "Tum Hi Ho",
+    "singer": "Arijit Singh",
+    "actor": "Aditya Roy Kapur",
+    "year": 2013,
+    "movie": "Aashiqui 2",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "Umqb9KENgmk",
+    "lyricsEn": "Hum tere bin ab reh nahi sakte\nTere bina kya wajood mera...\nKyunki tum hi ho, ab tum hi ho\nZindagi ab tum hi ho!",
+    "lyricsHi": "हम तेरे बिन अब रह नहीं सकते\nतेरे बिना क्या वजूद मेरा...\nक्योंकि तुम ही हो, अब तुम ही हो\nज़िंदगी अब तुम ही हो!"
+  },
+  {
+    "id": 3,
+    "title": "Chaleya",
+    "singer": "Arijit Singh & Shilpa Rao",
+    "actor": "Shah Rukh Khan",
+    "year": 2023,
+    "movie": "Jawan",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "VAdGW7QDJUI",
+    "lyricsEn": "Ishq mein dil bana hai, ishq mein dil fana hai\nChaleya teri ore, chaleya teri ore...",
+    "lyricsHi": "इश्क़ में दिल बना है, इश्क़ में दिल फना है\nचलेया तेरी ओर, चलेया तेरी ओर..."
+  },
+  {
+    "id": 4,
+    "title": "Apna Bana Le",
+    "singer": "Arijit Singh",
+    "actor": "Varun Dhawan",
+    "year": 2022,
+    "movie": "Bhediya",
+    "searches": 97,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "ElZfdU54Cp8",
+    "lyricsEn": "Tu mera koi na hoke bhi kuch laage\nKiya re jo bhi toone, kaise kiya re\nApna bana le piya, apna bana le...",
+    "lyricsHi": "तू मेरा कोई ना होके भी कुछ लागे\nकिया रे जो भी तूने कैसे किया रे\nअपना बना ले पिया अपना बना ले..."
+  },
+  {
+    "id": 5,
+    "title": "O Maahi",
+    "singer": "Arijit Singh",
+    "actor": "Shah Rukh Khan",
+    "year": 2023,
+    "movie": "Dunki",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "kC4pA0x5X7M",
+    "lyricsEn": "O maahi o maahi, tere ishq mein behta jaaun\nTu dhoop hai meri, tu chhaanv hai meri...",
+    "lyricsHi": "ओ माही ओ माही, तेरे इश्क़ में बहता जाऊं\nतू धूप है मेरी, तू छांव है मेरी..."
+  },
+  {
+    "id": 6,
+    "title": "Raataan Lambiyan",
+    "singer": "Jubin Nautiyal & Asees Kaur",
+    "actor": "Sidharth Malhotra",
+    "year": 2021,
+    "movie": "Shershaah",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "gvyUuxdRdR4",
+    "lyricsEn": "Kaate kate na re raataan lambiyan lambiyan re\nKare ghamzada meri aankhon ko...",
+    "lyricsHi": "काटे कटे ना रे रातां लम्बियाँ लम्बियाँ रे\nकरे ग़मज़दा मेरी आँखों को..."
+  },
+  {
+    "id": 7,
+    "title": "Channa Mereya",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2016,
+    "movie": "Ae Dil Hai Mushkil",
+    "searches": 97,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "284Ov7ysmfA",
+    "lyricsEn": "Acha chalta hoon, duaon mein yaad rakhna\nMere zikr ka zubaan pe swaad rakhna\nAndhera tera maine le liya\nMera ujla sitaara tere naam kiya...",
+    "lyricsHi": "अच्छा चलता हूँ दुआओं में याद रखना\nमेरे ज़िक्र का ज़ुबाँ पे स्वाद रखना..."
+  },
+  {
+    "id": 8,
+    "title": "Dil Diyan Gallan",
+    "singer": "Atif Aslam",
+    "actor": "Salman Khan",
+    "year": 2017,
+    "movie": "Tiger Zinda Hai",
+    "searches": 92,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "mevO4I0f5lg",
+    "lyricsEn": "Dil diyan gallan karange naal naal behke\nAkh naale akh nu milaake...",
+    "lyricsHi": "दिल दियाँ गल्लां करांगे नाल नाल बहके\nअख नाले अख नु मिलाके..."
+  },
+  {
+    "id": 9,
+    "title": "Agar Tum Saath Ho",
+    "singer": "Alka Yagnik & Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2015,
+    "movie": "Tamasha",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "sK7riqg2mr4",
+    "lyricsEn": "Pal bhar thehar jaao, dil yeh sambhal jaaye\nKaise tumhe roka karoon\nAgar tum saath ho...",
+    "lyricsHi": "पल भर ठहर जाओ दिल ये संभल जाए\nकैसे तुम्हें रोका करूँ\nअगर तुम साथ हो..."
+  },
+  {
+    "id": 10,
+    "title": "Ghungroo",
+    "singer": "Arijit Singh & Shilpa Rao",
+    "actor": "Hrithik Roshan",
+    "year": 2019,
+    "movie": "War",
+    "searches": 91,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "baaraat",
+    "ytId": "qFkNATtc3mc",
+    "lyricsEn": "Kyun lamhe kharaab karein, aa galti behisaab karein\nGhungroo toot gaye, naachungi main poori raat!",
+    "lyricsHi": "क्यों लम्हे खराब करें, आ गलती बेहिसाब करें\nघुँघरू टूट गए, नाचूँगी मैं पूरी रात!"
+  },
+  {
+    "id": 11,
+    "title": "Senorita",
+    "singer": "Farhan Akhtar & Hrithik Roshan",
+    "actor": "Hrithik Roshan",
+    "year": 2011,
+    "movie": "ZNMD",
+    "searches": 89,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "8mSUD7zWda4",
+    "lyricsEn": "Kaisi hai yeh rut ke jisme phool banke khil rahi hai zindagani\nSenorita, jo bhi pal beetein hain unhein jee lo khul ke...",
+    "lyricsHi": "कैसी है ये रुत के जिसमें फूल बनके खिल रही है ज़िंदगानी..."
+  },
+  {
+    "id": 12,
+    "title": "Teri Mitti",
+    "singer": "B Praak",
+    "actor": "Akshay Kumar",
+    "year": 2019,
+    "movie": "Kesari",
+    "searches": 95,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "wF_B_aagLfI",
+    "lyricsEn": "Teri mitti mein mil jaawaan, gul banke main khil jaawaan\nItni si hai dil ki aarzoo...",
+    "lyricsHi": "तेरी मिट्टी में मिल जावां, गुल बनके मैं खिल जावां..."
+  },
+  {
+    "id": 13,
+    "title": "Heeriye",
+    "singer": "Jasleen Royal & Arijit Singh",
+    "actor": "Dulquer Salmaan",
+    "year": 2023,
+    "movie": "Single",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "RLzC55ai0eo",
+    "lyricsEn": "Heeriye heeriye aa, heeriye heeriye aa\nTeri hoke mar jaaniye...",
+    "lyricsHi": "हीरीये हीरीये आ, हीरीये हीरीये आ\nतेरी होके मर जाणिये..."
+  },
+  {
+    "id": 14,
+    "title": "Kabira",
+    "singer": "Tochi Raina & Rekha Bhardwaj",
+    "actor": "Ranbir Kapoor",
+    "year": 2013,
+    "movie": "YJHD",
+    "searches": 94,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "jHNNMj5bNQw",
+    "lyricsEn": "Bann re kabira maan jaa, re kabira re\nKya paayega tu baawara hoke...",
+    "lyricsHi": "बन रे कबीरा मान जा, रे कबीरा रे..."
+  },
+  {
+    "id": 15,
+    "title": "Ilahi",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2013,
+    "movie": "YJHD",
+    "searches": 93,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "highway",
+    "ytId": "fdubeMFwuGs",
+    "lyricsEn": "Shaamein malang si, raatein surang si\nIlahi mera jee aaye aaye...",
+    "lyricsHi": "शामें मलंग सी, रातें सुरंग सी\nइलाही मेरा जी आए आए..."
+  },
+  {
+    "id": 16,
+    "title": "Aankh Marey",
+    "singer": "Neha Kakkar & Mika Singh",
+    "actor": "Ranveer Singh",
+    "year": 2018,
+    "movie": "Simmba",
+    "searches": 88,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "_KhQT-LGb-4",
+    "lyricsEn": "Ho ladki aankh marey, aankh marey!\nSeeti bajaye, beech sadak pe...",
+    "lyricsHi": "हो लड़की आँख मारे, आँख मारे!\nसीटी बजाए बीच सड़क पे..."
+  },
+  {
+    "id": 17,
+    "title": "Param Sundari",
+    "singer": "Shreya Ghoshal & A.R. Rahman",
+    "actor": "Kriti Sanon",
+    "year": 2021,
+    "movie": "Mimi",
+    "searches": 92,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "nfNc0XJdZ98",
+    "lyricsEn": "Bitiya tu to baadi soni hai re\nChali matak matak param sundari...",
+    "lyricsHi": "बिटिया तू तो बड़ी सोणी है रे\nचली मटक मटक परम सुंदरी..."
+  },
+  {
+    "id": 18,
+    "title": "Shayad",
+    "singer": "Arijit Singh",
+    "actor": "Kartik Aaryan",
+    "year": 2020,
+    "movie": "Love Aaj Kal",
+    "searches": 94,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "UbsbU8q_r78",
+    "lyricsEn": "Shayad kabhi na keh sakoon main tumko\nKahe bina samajh lo tum shayad...",
+    "lyricsHi": "शायद कभी ना कह सकूँ मैं तुमको\nकहे बिना समझ लो तुम शायद..."
+  },
+  {
+    "id": 19,
+    "title": "Deva Deva",
+    "singer": "Arijit Singh",
+    "actor": "Ranbir Kapoor",
+    "year": 2022,
+    "movie": "Brahmāstra",
+    "searches": 93,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "mNuhKUOD_A0",
+    "lyricsEn": "Chingariyan yeh jo mere seene mein hain dafan\nInko hawa deke kar doon aazad main agan\nOm deva deva...",
+    "lyricsHi": "चिंगारियाँ ये जो मेरे सीने में हैं दफ़न..."
+  },
+  {
+    "id": 20,
+    "title": "Tauba Tauba",
+    "singer": "Karan Aujla",
+    "actor": "Vicky Kaushal",
+    "year": 2024,
+    "movie": "Bad Newz",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "LK7-_dgAVQE",
+    "lyricsEn": "Husn tera tauba tauba, nakhra tera tauba tauba\nFloor pe laave aag...",
+    "lyricsHi": "हुस्न तेरा तौबा तौबा, नखरा तेरा तौबा तौबा..."
+  },
+  {
+    "id": 21,
+    "title": "Kal Ho Naa Ho",
+    "singer": "Sonu Nigam",
+    "actor": "Shah Rukh Khan",
+    "year": 2003,
+    "movie": "Kal Ho Naa Ho",
+    "searches": 95,
+    "playlist": [
+      "most-searched",
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "g0eO74UmRBs",
+    "lyricsEn": "Har ghadi badal rahi hai roop zindagi\nChhaanv hai kabhi kabhi hai dhoop zindagi\nHar pal yahan jee bhar jiyo\nJo hai samaa, kal ho naa ho!",
+    "lyricsHi": "हर घड़ी बदल रही है रूप ज़िंदगी..."
+  },
+  {
+    "id": 22,
+    "title": "Zara Sa",
+    "singer": "KK",
+    "actor": "Emraan Hashmi",
+    "year": 2008,
+    "movie": "Jannat",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "iW_8v0Y3230",
+    "lyricsEn": "Zara sa dil mein de jagah tu\nZara sa apna le bana\nZara sa khwaabon mein saja tu...",
+    "lyricsHi": "ज़रा सा दिल में दे जगह तू..."
+  },
+  {
+    "id": 23,
+    "title": "Tum Se Hi",
+    "singer": "Mohit Chauhan",
+    "actor": "Shahid Kapoor",
+    "year": 2007,
+    "movie": "Jab We Met",
+    "searches": 95,
+    "playlist": [
+      "most-searched",
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "mt9xg0mmt28",
+    "lyricsEn": "Aadha sa vaada, aadhe se zyaada\nAane laga hai gumaan\nTum se hi din hota hai...",
+    "lyricsHi": "आधा सा वादा आधे से ज़्यादा..."
+  },
+  {
+    "id": 24,
+    "title": "Kaho Naa Pyaar Hai",
+    "singer": "Lucky Ali & Alka Yagnik",
+    "actor": "Hrithik Roshan",
+    "year": 2000,
+    "movie": "Kaho Naa... Pyaar Hai",
+    "searches": 92,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "baaraat",
+    "ytId": "C8q31yF6f4w",
+    "lyricsEn": "Dil mera har baar yeh sunne ko beqaraar hai\nKaho naa pyaar hai, kaho naa pyaar hai!",
+    "lyricsHi": "दिल मेरा हर बार ये सुनने को बेकरार है..."
+  },
+  {
+    "id": 25,
+    "title": "Mitwa",
+    "singer": "Shafqat Amanat Ali",
+    "actor": "Shah Rukh Khan",
+    "year": 2006,
+    "movie": "KANK",
+    "searches": 90,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "_e_nO2lR8zQ",
+    "lyricsEn": "Jaane kyun hai khoya khoya dil\nJaane kyun hai uljha uljha dil\nMitwa, kahe dhadkanein tujhse kya...",
+    "lyricsHi": "जाने क्यों है खोया खोया दिल..."
+  },
+  {
+    "id": 26,
+    "title": "Tere Naam",
+    "singer": "Udit Narayan",
+    "actor": "Salman Khan",
+    "year": 2003,
+    "movie": "Tere Naam",
+    "searches": 90,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "1yXm1F3_pS0",
+    "lyricsEn": "Tere naam humne kiya hai jeevan apna saara sanam\nPyaar bahut karte hain tumse, ishq hai tu hamara sanam...",
+    "lyricsHi": "तेरे नाम हमने किया है जीवन अपना सारा सनम..."
+  },
+  {
+    "id": 27,
+    "title": "Jashn-E-Bahaara",
+    "singer": "Javed Ali & A.R. Rahman",
+    "actor": "Hrithik Roshan",
+    "year": 2008,
+    "movie": "Jodhaa Akbar",
+    "searches": 93,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "peace",
+    "ytId": "jM3h6c2xS-M",
+    "lyricsEn": "Kehne ko jashn-e-bahaara hai, ishq yeh dekhke hairaan hai\nPhool se khushboo khafa khafa hai...",
+    "lyricsHi": "कहने को जश्न-ए-बहारा है..."
+  },
+  {
+    "id": 28,
+    "title": "Pee Loon",
+    "singer": "Mohit Chauhan",
+    "actor": "Emraan Hashmi",
+    "year": 2010,
+    "movie": "Once Upon a Time in Mumbaai",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "hO4W3G1eK4A",
+    "lyricsEn": "Pee loon tere neele neele naino se shabnam\nPee loon tere geele geele hothon ki sargam...",
+    "lyricsHi": "पी लूँ तेरे नीले नीले नैनों से शबनम..."
+  },
+  {
+    "id": 29,
+    "title": "Woh Lamhe",
+    "singer": "Atif Aslam",
+    "actor": "Emraan Hashmi",
+    "year": 2005,
+    "movie": "Zeher",
+    "searches": 95,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "h3_uN9p1P3M",
+    "lyricsEn": "Woh lamhe, woh baatein, koi na jaane\nThi kaisi raatein, ho barsaatein...",
+    "lyricsHi": "वो लम्हे वो बातें कोई ना जाने..."
+  },
+  {
+    "id": 30,
+    "title": "Labon Ko",
+    "singer": "KK",
+    "actor": "Akshay Kumar",
+    "year": 2007,
+    "movie": "Bhool Bhulaiyaa",
+    "searches": 92,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "eN_qF5_Fh9Y",
+    "lyricsEn": "Labon ko labon pe sajao, kya ho tum mujhe ab batao\nTod do khud ko tum...",
+    "lyricsHi": "लबों को लबों पे सजाओ..."
+  },
+  {
+    "id": 31,
+    "title": "Suraj Hua Maddham",
+    "singer": "Sonu Nigam & Alka Yagnik",
+    "actor": "Shah Rukh Khan",
+    "year": 2001,
+    "movie": "K3G",
+    "searches": 96,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "zXpeqP1mO3c",
+    "lyricsEn": "Suraj hua maddham, chaand jalne laga\nAasmaan yeh haai kyun pighalne laga...",
+    "lyricsHi": "सूरज हुआ मद्धम, चाँद जलने लगा..."
+  },
+  {
+    "id": 32,
+    "title": "Main Agar Kahoon",
+    "singer": "Sonu Nigam & Shreya Ghoshal",
+    "actor": "Shah Rukh Khan",
+    "year": 2007,
+    "movie": "Om Shanti Om",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "monsoon",
+    "ytId": "DAYszHJg1Xo",
+    "lyricsEn": "Tumko paaya hai to jaise khoya hoon\nKehna chaahoon bhi to tumse kya kahoon...",
+    "lyricsHi": "तुमको पाया है तो जैसे खोया हूँ..."
+  },
+  {
+    "id": 33,
+    "title": "Chaiyya Chaiyya",
+    "singer": "Sukhwinder Singh",
+    "actor": "Shah Rukh Khan",
+    "year": 1998,
+    "movie": "Dil Se..",
+    "searches": 94,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "energy",
+    "ytId": "PQmrmVs10X8",
+    "lyricsEn": "Jinke sar ho ishq ki chaaon\nPaaon ke neeche jannat hogi\nChal chaiyya chaiyya chaiyya chaiyya!",
+    "lyricsHi": "जिनके सर हो इश्क़ की छांव..."
+  },
+  {
+    "id": 34,
+    "title": "Tujhe Dekha Toh",
+    "singer": "Kumar Sanu & Lata Mangeshkar",
+    "actor": "Shah Rukh Khan",
+    "year": 1995,
+    "movie": "DDLJ",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "cNV5hLKh9QE",
+    "lyricsEn": "Tujhe dekha toh yeh jaana sanam\nPyaar hota hai deewana sanam\nAb yahan se kahan jaayein hum...",
+    "lyricsHi": "तुझे देखा तो ये जाना सनम..."
+  },
+  {
+    "id": 35,
+    "title": "Pehla Nasha",
+    "singer": "Udit Narayan",
+    "actor": "Aamir Khan",
+    "year": 1992,
+    "movie": "Jo Jeeta Wohi Sikandar",
+    "searches": 93,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "78n_l7X_24A",
+    "lyricsEn": "Pehla nasha, pehla khumaar\nNaya pyaar hai, naya intezaar\nKar loon main kya apna haal...",
+    "lyricsHi": "पहला नशा पहला खुमार..."
+  },
+  {
+    "id": 36,
+    "title": "Tip Tip Barsa Paani",
+    "singer": "Udit Narayan & Alka Yagnik",
+    "actor": "Akshay Kumar & Raveena Tandon",
+    "year": 1994,
+    "movie": "Mohra",
+    "searches": 97,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "BgmG_RBNq2k",
+    "lyricsEn": "Tip tip barsa paani, paani ne aag lagayi\nAag lagi dil mein toh, dil ko teri yaad aayi...",
+    "lyricsHi": "टिप टिप बरसा पानी, पानी ने आग लगाई..."
+  },
+  {
+    "id": 37,
+    "title": "Kuch Kuch Hota Hai",
+    "singer": "Udit Narayan & Alka Yagnik",
+    "actor": "Shah Rukh Khan",
+    "year": 1998,
+    "movie": "Kuch Kuch Hota Hai",
+    "searches": 96,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "dGk_g_5eC7I",
+    "lyricsEn": "Tum paas aaye, yoon muskuraaye\nTumne na jaane kya sapne dikhaaye\nAb to mera dil jaage na sota hai\nKya karoon haaye, kuch kuch hota hai!",
+    "lyricsHi": "तुम पास आए यूँ मुस्कुराए..."
+  },
+  {
+    "id": 38,
+    "title": "Chura Ke Dil Mera",
+    "singer": "Kumar Sanu & Alka Yagnik",
+    "actor": "Akshay Kumar & Shilpa Shetty",
+    "year": 1994,
+    "movie": "Main Khiladi Tu Anari",
+    "searches": 93,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "baaraat",
+    "ytId": "f9m_y1F53v8",
+    "lyricsEn": "Chura ke dil mera goriya chali\nUda ke nindiyaan kahan tu chali...",
+    "lyricsHi": "चुरा के दिल मेरा गोरिया चली..."
+  },
+  {
+    "id": 39,
+    "title": "Dheere Dheere Se",
+    "singer": "Kumar Sanu & Anuradha Paudwal",
+    "actor": "Rahul Roy",
+    "year": 1990,
+    "movie": "Aashiqui",
+    "searches": 94,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "monsoon",
+    "ytId": "Mv_3oKzXFv4",
+    "lyricsEn": "Dheere dheere se meri zindagi mein aana\nDheere dheere se dil ko churaana...",
+    "lyricsHi": "धीरे धीरे से मेरी ज़िंदगी में आना..."
+  },
+  {
+    "id": 40,
+    "title": "Yeh Kaali Kaali Aankhen",
+    "singer": "Kumar Sanu",
+    "actor": "Shah Rukh Khan",
+    "year": 1993,
+    "movie": "Baazigar",
+    "searches": 92,
+    "playlist": [
+      "90s-magic"
+    ],
+    "mood": "energy",
+    "ytId": "kLwQ1g5R3G8",
+    "lyricsEn": "Yeh kaali kaali aankhen, yeh gore gore gaal\nYeh teekhi teekhi nazrein, yeh kaali kaali zulfen...",
+    "lyricsHi": "ये काली काली आँखें, ये गोरे गोरे गाल..."
+  },
+  {
+    "id": 41,
+    "title": "Pal Pal Dil Ke Paas",
+    "singer": "Kishore Kumar",
+    "actor": "Dharmendra",
+    "year": 1973,
+    "movie": "Blackmail",
+    "searches": 96,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "N_jQ716d9s0",
+    "lyricsEn": "Pal pal dil ke paas tum rehti ho\nJeevan meethi pyaas yeh kehti ho...",
+    "lyricsHi": "पल पल दिल के पास तुम रहती हो..."
+  },
+  {
+    "id": 42,
+    "title": "Tere Jaisa Yaar Kahan",
+    "singer": "Kishore Kumar",
+    "actor": "Amitabh Bachchan",
+    "year": 1981,
+    "movie": "Yaarana",
+    "searches": 93,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "Fj73E0H7l3A",
+    "lyricsEn": "Tere jaisa yaar kahan, kahan aisa yaarana\nYaad karegi duniya tera mera afsana!",
+    "lyricsHi": "तेरे जैसा यार कहाँ, कहाँ ऐसा याराना..."
+  },
+  {
+    "id": 43,
+    "title": "Lag Ja Gale",
+    "singer": "Lata Mangeshkar",
+    "actor": "Sadhana",
+    "year": 1964,
+    "movie": "Woh Kaun Thi?",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "golden-era"
+    ],
+    "mood": "monsoon",
+    "ytId": "TFr6G5zveS8",
+    "lyricsEn": "Lag ja gale ke phir yeh haseen raat ho na ho\nShaayad phir is janam mein mulaaqaat ho na ho...",
+    "lyricsHi": "लग जा गले कि फिर ये हसीं रात हो न हो..."
+  },
+  {
+    "id": 44,
+    "title": "Khaike Paan Banaraswala",
+    "singer": "Kishore Kumar",
+    "actor": "Amitabh Bachchan",
+    "year": 1978,
+    "movie": "Don",
+    "searches": 95,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "baaraat",
+    "ytId": "x1v_3eK56Q8",
+    "lyricsEn": "Khaike paan banaraswala, khul jaaye band aqal ka taala\nPhir to aisa kare kamaal...",
+    "lyricsHi": "खईके पान बनारस वाला, खुल जाए बंद अक्ल का ताला..."
+  },
+  {
+    "id": 45,
+    "title": "Yeh Shaam Mastani",
+    "singer": "Kishore Kumar",
+    "actor": "Rajesh Khanna",
+    "year": 1971,
+    "movie": "Kati Patang",
+    "searches": 91,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "m_yU3N2B26M",
+    "lyricsEn": "Yeh shaam mastani, madhosh kiye jaaye\nMujhe dor koi kheenche, teri ore liye jaaye...",
+    "lyricsHi": "ये शाम मस्तानी मदहोश किये जाए..."
+  },
+  {
+    "id": 46,
+    "title": "Roop Tera Mastana",
+    "singer": "Kishore Kumar",
+    "actor": "Rajesh Khanna",
+    "year": 1969,
+    "movie": "Aradhana",
+    "searches": 90,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "HenA-OUyo08",
+    "lyricsEn": "Roop tera mastana, pyaar mera deewana\nBhool koi humse na ho jaaye...",
+    "lyricsHi": "रूप तेरा मस्ताना प्यार मेरा दीवाना..."
+  },
+  {
+    "id": 47,
+    "title": "Kya Hua Tera Wada",
+    "singer": "Mohammed Rafi",
+    "actor": "Rishi Kapoor",
+    "year": 1977,
+    "movie": "Hum Kisise Kum Naheen",
+    "searches": 93,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "EwX1XW1G9nU",
+    "lyricsEn": "Kya hua tera wada, woh qasam, woh iraada\nBhoolega dil jis din tumhe...",
+    "lyricsHi": "क्या हुआ तेरा वादा वो कसम वो इरादा..."
+  },
+  {
+    "id": 48,
+    "title": "Chura Liya Hai Tumne",
+    "singer": "Mohammed Rafi & Asha Bhosle",
+    "actor": "Zeenat Aman",
+    "year": 1973,
+    "movie": "Yaadon Ki Baaraat",
+    "searches": 94,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "E37M4s7_f8M",
+    "lyricsEn": "Chura liya hai tumne jo dil ko, nazar nahi churaana sanam\nBadalke meri tum zindagani...",
+    "lyricsHi": "चुरा लिया है तुमने जो दिल को..."
+  },
+  {
+    "id": 49,
+    "title": "Mere Sapno Ki Rani",
+    "singer": "Kishore Kumar",
+    "actor": "Rajesh Khanna",
+    "year": 1969,
+    "movie": "Aradhana",
+    "searches": 95,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "highway",
+    "ytId": "vo1MyS1Xv1M",
+    "lyricsEn": "Mere sapno ki rani kab aayegi tu\nAayi rut mastaani kab aayegi tu\nBeeti jaaye zindagani kab aayegi tu\nChali aa, tu chali aa!",
+    "lyricsHi": "मेरे सपनों की रानी कब आएगी तू..."
+  },
+  {
+    "id": 50,
+    "title": "Yeh Dosti Hum Nahi Todenge",
+    "singer": "Kishore Kumar & Manna Dey",
+    "actor": "Amitabh Bachchan & Dharmendra",
+    "year": 1975,
+    "movie": "Sholay",
+    "searches": 98,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "1T2xGfQ5G6w",
+    "lyricsEn": "Yeh dosti hum nahi todenge\nTodenge dam magar, tera saath na chhodenge!",
+    "lyricsHi": "ये दोस्ती हम नहीं तोड़ेंगे\nतोड़ेंगे दम मगर तेरा साथ ना छोड़ेंगे!"
+  },
+  {
+    "id": 51,
+    "title": "Gulabi Aankhen",
+    "singer": "Mohammed Rafi",
+    "actor": "Rajesh Khanna",
+    "year": 1970,
+    "movie": "The Train",
+    "searches": 97,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "baaraat",
+    "ytId": "u_kF4L1vM8k",
+    "lyricsEn": "Gulabi aankhen jo teri dekhi\nSharabi yeh dil ho gaya\nSambhaalo mujhko o mere yaaron...",
+    "lyricsHi": "गुलाबी आँखें जो तेरी देखी\nशराबी ये दिल हो गया..."
+  },
+  {
+    "id": 52,
+    "title": "O Saathi Re",
+    "singer": "Kishore Kumar",
+    "actor": "Amitabh Bachchan",
+    "year": 1978,
+    "movie": "Muqaddar Ka Sikandar",
+    "searches": 92,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "peace",
+    "ytId": "b8_G9eW3S2M",
+    "lyricsEn": "O saathi re, tere bina bhi kya jeena\nPhoolon mein kaliyon mein, sapnon ki galiyon mein\nTere bina kuch kahin na...",
+    "lyricsHi": "ओ साथी रे तेरे बिना भी क्या जीना..."
+  },
+  {
+    "id": 53,
+    "title": "Zingaat",
+    "singer": "Ajay-Atul",
+    "actor": "Akash Thosar & Rinku Rajguru",
+    "year": 2016,
+    "movie": "Sairat",
+    "searches": 99,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "energy",
+    "ytId": "84Yn_kYk-v4",
+    "lyricsEn": "Usarat gaani baaraat naache\nZingaat zingaat zing zing zingaat!\nKaalijat ghusli tu jivaat gaath...",
+    "lyricsHi": "उसात गाणी बारात नाचे\nझिंगाट झिंगाट झिंग झिंग झिंगाट!\nकाळजात घुसली तू जीवात गाठ..."
+  },
+  {
+    "id": 54,
+    "title": "Apsara Aali",
+    "singer": "Bela Shende & Ajay-Atul",
+    "actor": "Sonalee Kulkarni",
+    "year": 2010,
+    "movie": "Natarang",
+    "searches": 96,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "marathi",
+    "ytId": "_4wP_m4d7_Q",
+    "lyricsEn": "Apsara aali indrachi nagari sodun\nGhungroo baandhoon paayi rani naache chham chham...",
+    "lyricsHi": "अप्सरा आली इंद्राची नगरी सोडून\nघुंगरू बांधून पायी राणी नाचे छम छम..."
+  },
+  {
+    "id": 55,
+    "title": "Yad Lagla",
+    "singer": "Ajay Gogavale",
+    "actor": "Akash Thosar",
+    "year": 2016,
+    "movie": "Sairat",
+    "searches": 95,
+    "playlist": [
+      "modern-chartbusters"
+    ],
+    "mood": "monsoon",
+    "ytId": "W3e6Y5H3_Gk",
+    "lyricsEn": "Yad lagla ga yad lagla ga\nJeev ha maaza tula bhidala\nKaalij maaza tula jadala...",
+    "lyricsHi": "याड लागलं गं याड लागलं गं\nजीव हा माझा तुला भिडला\nकाळिज माझा तुला जडला..."
+  },
+  {
+    "id": 56,
+    "title": "Man Udhan Varyache",
+    "singer": "Shankar Mahadevan",
+    "actor": "Makarand Anaspure",
+    "year": 2006,
+    "movie": "Agabai Arechha",
+    "searches": 94,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "highway",
+    "ytId": "g_vM5O_aIqI",
+    "lyricsEn": "Man udhan varyache, ghei roop he ranache\nKshanat hasave kshanat radave\nKshanat he baware vaave...",
+    "lyricsHi": "मन उधाण वाऱ्याचे, घेई रूप हे रानाचे\nक्षणात हसावे क्षणात रडावे..."
+  },
+  {
+    "id": 57,
+    "title": "Chandra",
+    "singer": "Shreya Ghoshal & Ajay-Atul",
+    "actor": "Amruta Khanvilkar",
+    "year": 2022,
+    "movie": "Chandramukhi",
+    "searches": 97,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "marathi",
+    "ytId": "g8s2A3H3X4g",
+    "lyricsEn": "Sawaljawaabat rangali raat hi chandra mohana\nKashi baghu me tula re shyamasundara...",
+    "lyricsHi": "सवालजवाबात रंगली रात ही चंद्र मोहना\nकशी बघू मी तुला रे श्यामसुंदरा..."
+  },
+  {
+    "id": 58,
+    "title": "Mauli Mauli",
+    "singer": "Ajay Gogavale",
+    "actor": "Riteish Deshmukh",
+    "year": 2014,
+    "movie": "Lai Bhaari",
+    "searches": 98,
+    "playlist": [
+      "most-searched",
+      "modern-chartbusters"
+    ],
+    "mood": "peace",
+    "ytId": "kLwQ1g5R3G8",
+    "lyricsEn": "Mauli mauli roop tuze, kiti sundar te dhyan\nVithu mauli tu, mauli jagachi...",
+    "lyricsHi": "माऊली माऊली रूप तुझे, किती सुंदर ते ध्यान\nविठू माऊली तू, माऊली जगाची..."
+  },
+  {
+    "id": 59,
+    "title": "Kombdi Palali",
+    "singer": "Anand Shinde & Vaishali Samant",
+    "actor": "Bharat Jadhav",
+    "year": 2006,
+    "movie": "Jatra",
+    "searches": 93,
+    "playlist": [
+      "2000s-classics"
+    ],
+    "mood": "energy",
+    "ytId": "v8wM4_F8K3M",
+    "lyricsEn": "Kombdi palali tangdi dharun langdi ka ghali\nJatra aali ga pori jatra aali!",
+    "lyricsHi": "कोंबडी पळाली टांगडी धरून लंगडी का घाली\nजत्रा आली गं पोरी जत्रा आली!"
+  },
+  {
+    "id": 60,
+    "title": "Dhagala Lagli Kala",
+    "singer": "Dada Kondke",
+    "actor": "Dada Kondke",
+    "year": 1978,
+    "movie": "Bot Lavin Tithe Gudgulya",
+    "searches": 94,
+    "playlist": [
+      "golden-era"
+    ],
+    "mood": "energy",
+    "ytId": "eN_qF5_Fh9Y",
+    "lyricsEn": "Dhagala lagli kala paani themb themb gala\nKasa vadhava ha rang premacha...",
+    "lyricsHi": "ढगाला लागली कळ पाणी थेंब थेंब गळ..."
+  }
+];
 
     // State
     let songs = [];
     try {
       const saved = localStorage.getItem('hit_songs_collection');
       songs = saved ? JSON.parse(saved) : INITIAL_SONGS;
+      if (songs.length < INITIAL_SONGS.length) {
+        const existingIds = new Set(songs.map(s => s.id));
+        INITIAL_SONGS.forEach(s => {
+          if (!existingIds.has(s.id)) songs.push(s);
+        });
+        localStorage.setItem('hit_songs_collection', JSON.stringify(songs));
+      }
     } catch (e) {
       songs = INITIAL_SONGS;
     }
@@ -820,8 +1811,6 @@
     let isPlaying = false;
     let currentPlayingTrackId = null;
     let streamTimer = null;
-    let currentSeconds = 0;
-    const TOTAL_PREVIEW_DURATION = 30;
 
     let isShuffle = false;
     let repeatMode = 'all';
@@ -829,15 +1818,16 @@
     let playbackSpeed = 1.0;
     let isTanpuraOn = false;
     let tanpuraOsc = null;
-    let isRetroCassetteOpen = false;
+    let isRetroCassetteOpen = true;
     let lyricsScriptMode = 'en';
 
     // Sleep Timer
     let sleepTimerInterval = null;
     let sleepSecondsRemaining = 0;
 
-    // Web Audio Nodes
-    let currentFilterNode = null;
+    // YouTube Master Stream Player Instance
+    let ytPlayer = null;
+    let isYtReady = false;
 
     // Visualizer Canvas Context
     const canvas = document.getElementById('visualizer-canvas');
@@ -900,6 +1890,7 @@
     const tapeWheelRight = document.getElementById('tape-wheel-right');
     const cassetteSongLabel = document.getElementById('cassette-song-label');
     const cassetteArtistLabel = document.getElementById('cassette-artist-label');
+    const playerScreenOverlay = document.getElementById('player-screen-overlay');
     const tanpuraToggle = document.getElementById('tanpura-toggle');
     const sleepTimerSelect = document.getElementById('sleep-timer-select');
 
@@ -940,7 +1931,63 @@
     const toggleScriptBtn = document.getElementById('toggle-script-btn');
     let activeLyricsSong = null;
 
-    // 2. POPULATE DROPDOWNS DYNAMICALLY
+    // 2. YOUTUBE CLOUD STREAMING ENGINE (Original Studio Vocals & Real Music)
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '100%',
+        width: '100%',
+        videoId: 'BddP6PYo2gs',
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    function onPlayerReady() {
+      isYtReady = true;
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        playerToggleLabel.textContent = 'Pause';
+        tapeWheelLeft.classList.remove('paused');
+        tapeWheelRight.classList.remove('paused');
+        playerScreenOverlay.classList.add('hidden');
+        startVisualizer();
+        startProgressTracker();
+        render();
+      } else if (event.data === YT.PlayerState.PAUSED) {
+        isPlaying = false;
+        playerToggleLabel.textContent = 'Play';
+        tapeWheelLeft.classList.add('paused');
+        tapeWheelRight.classList.add('paused');
+        stopVisualizer();
+        render();
+      } else if (event.data === YT.PlayerState.ENDED) {
+        if (repeatMode === 'one') {
+          if (ytPlayer) ytPlayer.seekTo(0);
+        } else {
+          playNextTrack();
+        }
+      }
+    }
+
+    // Load YouTube API script asynchronously
+    const ytScriptTag = document.createElement('script');
+    ytScriptTag.src = "https://www.youtube.com/iframe_api";
+    const firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(ytScriptTag, firstScript);
+
+    // 3. POPULATE DROPDOWNS DYNAMICALLY
     function populateDropdowns() {
       const singers = new Set();
       songs.forEach(s => {
@@ -971,7 +2018,7 @@
       });
     }
 
-    // 3. RENDER CUSTOM PLAYLIST TABS
+    // 4. RENDER CUSTOM PLAYLIST TABS
     function renderCustomPlaylistTabs() {
       customPlaylistPillsContainer.innerHTML = '';
       customPlaylists.forEach(pl => {
@@ -985,7 +2032,7 @@
       });
     }
 
-    // 4. FILTERING LOGIC
+    // 5. FILTERING LOGIC
     function getFilteredSongs() {
       return songs.filter(song => {
         if (currentMood !== 'all') {
@@ -1033,7 +2080,7 @@
       });
     }
 
-    // 5. RENDER SONGS TO LIST
+    // 6. RENDER SONGS TO LIST
     function render() {
       renderCustomPlaylistTabs();
       const filtered = getFilteredSongs();
@@ -1080,9 +2127,9 @@
                 <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300">
                   ${song.year}
                 </span>
-                <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 flex items-center gap-1">
-                  <svg class="w-2.5 h-2.5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.294a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"/></svg>
-                  Cloud
+                <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-1">
+                  <svg class="w-2.5 h-2.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.294a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"/></svg>
+                  Master Audio
                 </span>
                 ${song.mood ? `
                   <span class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-amber-500/10 text-amber-300 border border-amber-500/20">
@@ -1158,10 +2205,10 @@
                   <span class="w-0.5 bg-white rounded-full eq-bar-2"></span>
                   <span class="w-0.5 bg-white rounded-full eq-bar-3"></span>
                 </div>
-                <span>Streaming Now</span>
+                <span>Streaming Master</span>
               ` : `
                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <span>Stream Track</span>
+                <span>Stream Master Track</span>
               `}
             </button>
             <button 
@@ -1204,86 +2251,67 @@
       return div.innerHTML;
     }
 
-    // 6. CLOUD AUDIO STREAMING & SOUND EQUALIZER ENGINE
+    // 7. STREAM TRACK FUNCTION (ORIGINAL VOCALS & STUDIO MASTER AUDIO)
     function streamTrackAudio(song) {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      stopAudio();
-
-      isPlaying = true;
       currentPlayingTrackId = song.id;
-      currentSeconds = 0;
 
       nowPlayingBar.classList.remove('translate-y-full');
       playerTitle.textContent = song.title;
       playerArtist.textContent = `${song.singer} • ${song.actor || 'Classic'} (${song.year})`;
-      playerToggleLabel.textContent = 'Pause';
+      playerToggleLabel.textContent = 'Playing...';
       
       cassetteSongLabel.textContent = song.title;
-      cassetteArtistLabel.textContent = `${song.singer} (${song.year})`;
-      tapeWheelLeft.classList.remove('paused');
-      tapeWheelRight.classList.remove('paused');
+      cassetteArtistLabel.textContent = `${song.singer} • ${song.year}`;
 
-      currentFilterNode = audioCtx.createBiquadFilter();
-      applyEqPresetToFilter(currentFilterNode, currentEqPreset);
+      // Play original studio track through cloud stream
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        if (song.ytId) {
+        ytPlayer.loadVideoById({
+          videoId: song.ytId,
+          startSeconds: 0
+        });
+      } else {
+        ytPlayer.loadPlaylist({
+          listType: 'search',
+          list: song.ytQuery || song.title + ' ' + song.singer + ' audio',
+          index: 0,
+          startSeconds: 0
+        });
+      }
+        ytPlayer.loadVideoById({
+          videoId: streamId,
+          startSeconds: 0
+        });
+        ytPlayer.playVideo();
+        if (playbackSpeed !== 1.0) ytPlayer.setPlaybackRate(playbackSpeed);
+      }
 
       if (isTanpuraOn) startTanpuraDrone();
-
-      const baseFreq = 220 + ((song.year % 12) * 20);
-      const notes = [baseFreq, baseFreq * 1.25, baseFreq * 1.5, baseFreq * 1.875, baseFreq * 2];
-      
-      let step = 0;
-      const playStep = () => {
-        if (!isPlaying || currentPlayingTrackId !== song.id) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = (currentEqPreset === 'bass') ? 'sawtooth' : 'triangle';
-        osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
-        
-        const gainVal = (currentEqPreset === 'bass') ? 0.09 : 0.12;
-        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (0.45 / playbackSpeed));
-
-        osc.connect(gain);
-        gain.connect(currentFilterNode);
-        currentFilterNode.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + (0.45 / playbackSpeed));
-
-        step++;
-        window.activeAudioTimer = setTimeout(playStep, Math.floor(320 / playbackSpeed));
-      };
-
-      playStep();
-      startVisualizer();
-
-      streamTimer = setInterval(() => {
-        if (!isPlaying) return;
-        currentSeconds++;
-        const pct = Math.min(100, (currentSeconds / TOTAL_PREVIEW_DURATION) * 100);
-        playerProgress.value = pct;
-        
-        const mins = Math.floor(currentSeconds / 60);
-        const secs = currentSeconds % 60;
-        playerCurrentTime.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-        if (currentSeconds >= TOTAL_PREVIEW_DURATION) {
-          if (repeatMode === 'one') {
-            currentSeconds = 0;
-            playerProgress.value = 0;
-          } else {
-            playNextTrack();
-          }
-        }
-      }, 1000);
-
       render();
     }
 
+    function startProgressTracker() {
+      if (streamTimer) clearInterval(streamTimer);
+      streamTimer = setInterval(() => {
+        if (!isPlaying || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 1;
+        
+        const pct = (cur / dur) * 100;
+        playerProgress.value = pct;
+
+        const curMins = Math.floor(cur / 60);
+        const curSecs = Math.floor(cur % 60);
+        playerCurrentTime.textContent = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs}`;
+
+        const durMins = Math.floor(dur / 60);
+        const durSecs = Math.floor(dur % 60);
+        playerDuration.textContent = `${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+      }, 500);
+    }
+
     function startTanpuraDrone() {
-      if (!audioCtx) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       stopTanpuraDrone();
       try {
         tanpuraOsc = audioCtx.createOscillator();
@@ -1304,26 +2332,10 @@
       }
     }
 
-    function applyEqPresetToFilter(filter, preset) {
-      if (!filter) return;
-      if (preset === 'bass') {
-        filter.type = 'lowshelf';
-        filter.frequency.setValueAtTime(200, audioCtx.currentTime);
-        filter.gain.setValueAtTime(8, audioCtx.currentTime);
-      } else if (preset === 'vocal') {
-        filter.type = 'peaking';
-        filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
-        filter.gain.setValueAtTime(6, audioCtx.currentTime);
-      } else if (preset === 'acoustic') {
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(800, audioCtx.currentTime);
-      } else {
-        filter.type = 'allpass';
-      }
-    }
-
     function stopAudio() {
-      if (window.activeAudioTimer) clearTimeout(window.activeAudioTimer);
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        ytPlayer.pauseVideo();
+      }
       if (streamTimer) clearInterval(streamTimer);
       stopTanpuraDrone();
       stopVisualizer();
@@ -1381,7 +2393,7 @@
         const bars = 16;
         const barWidth = canvas.width / bars;
         for (let i = 0; i < bars; i++) {
-          const barHeight = Math.sin(Date.now() * 0.005 + i) * 15 + Math.random() * 12 + 6;
+          const barHeight = Math.sin(Date.now() * 0.005 + i) * 12 + Math.random() * 10 + 4;
           canvasCtx.fillStyle = `hsl(${220 + i * 8}, 85%, 65%)`;
           canvasCtx.fillRect(i * barWidth, canvas.height - barHeight, barWidth - 2, barHeight);
         }
@@ -1395,7 +2407,7 @@
       canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    // 7. EVENT LISTENERS
+    // 8. EVENT LISTENERS
     songList.addEventListener('click', (e) => {
       const playBtn = e.target.closest('.play-track-btn');
       if (playBtn) {
@@ -1497,6 +2509,9 @@
 
     playbackSpeedSelect.addEventListener('change', (e) => {
       playbackSpeed = parseFloat(e.target.value);
+      if (ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
+        ytPlayer.setPlaybackRate(playbackSpeed);
+      }
     });
 
     moodPills.addEventListener('click', (e) => {
@@ -1548,6 +2563,7 @@
         searches: 85,
         playlist: ["modern-chartbusters"],
         mood: "highway",
+        ytId: "BddP6PYo2gs",
         lyricsEn: `Sing along with ${title} by ${artist}!`,
         lyricsHi: `${title} - ${artist} के साथ गाइए!`
       };
@@ -1654,8 +2670,9 @@
       if (isPlaying) {
         stopAudio();
       } else if (currentPlayingTrackId) {
-        const song = songs.find(s => s.id === currentPlayingTrackId);
-        if (song) streamTrackAudio(song);
+        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+          ytPlayer.playVideo();
+        }
       } else {
         const currentList = getFilteredSongs();
         if (currentList.length > 0) streamTrackAudio(currentList[0]);
@@ -1664,17 +2681,15 @@
     });
 
     playerProgress.addEventListener('input', (e) => {
-      currentSeconds = Math.floor((e.target.value / 100) * TOTAL_PREVIEW_DURATION);
-      const mins = Math.floor(currentSeconds / 60);
-      const secs = currentSeconds % 60;
-      playerCurrentTime.textContent = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+        const dur = ytPlayer.getDuration() || 1;
+        const targetSec = (e.target.value / 100) * dur;
+        ytPlayer.seekTo(targetSec, true);
+      }
     });
 
     soundEqSelect.addEventListener('change', (e) => {
       currentEqPreset = e.target.value;
-      if (currentFilterNode && audioCtx) {
-        applyEqPresetToFilter(currentFilterNode, currentEqPreset);
-      }
     });
 
     playerLyricsBtn.addEventListener('click', () => {
@@ -1865,6 +2880,68 @@
         copyBtnText.textContent = 'Copy Tracklist';
       }, 2500);
     });
+
+    
+    // Universal On-Demand Streaming for ANY song
+    const universalSongInput = document.getElementById('universal-song-input');
+    const universalStreamBtn = document.getElementById('universal-stream-btn');
+
+    function streamAnyUniversalSong(query) {
+      if (!query) return;
+      const qLower = query.toLowerCase();
+      let match = songs.find(s => s.title.toLowerCase().includes(qLower) || s.singer.toLowerCase().includes(qLower));
+
+      if (match) {
+        streamTrackAudio(match);
+        return;
+      }
+
+      const newTrack = {
+        id: Date.now(),
+        title: query,
+        singer: "Cloud Master Artist",
+        actor: "Studio Original",
+        year: new Date().getFullYear(),
+        movie: "Universal Cloud",
+        searches: 99,
+        playlist: ["most-searched", "modern-chartbusters"],
+        mood: "highway",
+        ytQuery: query,
+        lyricsEn: `Sing along to: ${query}!`,
+        lyricsHi: `${query} - मूल स्टूडियो गायन!`
+      };
+
+      songs.unshift(newTrack);
+      try {
+        localStorage.setItem('hit_songs_collection', JSON.stringify(songs));
+      } catch (e) {}
+
+      populateDropdowns();
+      streamTrackAudio(newTrack);
+      render();
+    }
+
+    if (universalStreamBtn) {
+      universalStreamBtn.addEventListener('click', () => {
+        const q = universalSongInput.value.trim();
+        if (q) {
+          streamAnyUniversalSong(q);
+          universalSongInput.value = '';
+        }
+      });
+    }
+
+    if (universalSongInput) {
+      universalSongInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const q = universalSongInput.value.trim();
+          if (q) {
+            streamAnyUniversalSong(q);
+            universalSongInput.value = '';
+          }
+        }
+      });
+    }
 
     // Initial load
     populateDropdowns();
