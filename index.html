@@ -63,10 +63,10 @@
             </h1>
             <span class="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              100% Ad-Free Pure Audio
+              Original Master Vocals
             </span>
           </div>
-          <p class="text-xs text-slate-400">Pure Cloud Audio Streaming &bull; Zero Ads &bull; No Video &bull; 0 MB storage</p>
+          <p class="text-xs text-slate-400">Stream original studio recordings &bull; 100% Free &bull; Zero storage</p>
         </div>
       </div>
 
@@ -121,7 +121,7 @@
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
           <span class="text-xs font-bold uppercase tracking-widest text-amber-300 font-mono">SWARCLOUD MASTER STREAM &bull; ORIGINAL STUDIO AUDIO</span>
         </div>
-        <span class="text-[11px] font-mono text-emerald-400/90 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">100% AD-FREE</span>
+        <span class="text-[11px] font-mono text-emerald-400/90 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">ONLINE STREAM</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
@@ -135,18 +135,20 @@
             </div>
           </div>
 
-          <!-- Pure Audio Visualizer & Vinyl Deck (100% Ad-Free) -->
-          <div class="w-full flex-1 max-w-sm rounded-2xl overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/30 shadow-2xl relative p-4 flex flex-col items-center justify-center min-h-[170px]">
+          <!-- Pure Audio Studio Stage (Zero Video Shown to Customer, Zero Visual Ads) -->
+          <div class="w-full flex-1 max-w-sm rounded-2xl overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border border-amber-500/30 shadow-2xl relative p-5 flex flex-col items-center justify-center min-h-[190px]">
             
-            <!-- Hidden YouTube elements kept strictly for ID validation compatibility without ever loading videos or ads -->
-            <div id="yt-player-container" class="hidden"><div id="yt-player"></div></div>
+            <!-- Completely Hidden Audio Stream Engine (Offscreen, Zero Video Shown) -->
+            <div id="yt-player-container" class="absolute w-[1px] h-[1px] overflow-hidden opacity-[0.001] pointer-events-none -left-[9999px]">
+              <div id="yt-player"></div>
+            </div>
 
-            <!-- Spinning Vinyl Record (Pure Audio Indicator) -->
-            <div class="relative flex items-center justify-center mb-2">
-              <div id="vinyl-disc" class="vinyl-spin paused w-20 h-20 rounded-full bg-slate-950 border-4 border-slate-800 flex items-center justify-center shadow-2xl relative">
-                <div class="w-16 h-16 rounded-full border border-slate-700/50 flex items-center justify-center">
-                  <div class="w-12 h-12 rounded-full border border-slate-700/60 flex items-center justify-center">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-600 flex items-center justify-center text-white text-[9px] font-bold shadow-md">
+            <!-- Spinning Gold Vinyl Record -->
+            <div class="relative flex items-center justify-center mb-3">
+              <div id="vinyl-disc" class="vinyl-spin paused w-24 h-24 rounded-full bg-slate-950 border-4 border-slate-800 flex items-center justify-center shadow-2xl relative">
+                <div class="w-20 h-20 rounded-full border border-slate-700/50 flex items-center justify-center">
+                  <div class="w-14 h-14 rounded-full border border-slate-700/60 flex items-center justify-center">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-indigo-600 flex items-center justify-center text-white text-[10px] font-bold shadow-md">
                       स्
                     </div>
                   </div>
@@ -154,14 +156,14 @@
               </div>
             </div>
 
-            <!-- Visualizer Overlay & Track Info -->
+            <!-- Track Info & Audio Waveform -->
             <div id="player-screen-overlay" class="text-center w-full">
-              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px] font-semibold mb-1">
+              <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px] font-semibold mb-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Pure Audio &bull; 0 Ads</span>
+                <span>Original Studio Audio &bull; 0 Video &bull; 0 Ads</span>
               </div>
               <p id="cassette-song-label" class="text-sm font-bold text-amber-200 truncate max-w-xs mx-auto">Select Any Track</p>
-              <p id="cassette-artist-label" class="text-xs text-slate-400 truncate max-w-xs mx-auto">100% Ad-Free Audio Stream</p>
+              <p id="cassette-artist-label" class="text-xs text-slate-400 truncate max-w-xs mx-auto">Original Vocals & Music</p>
             </div>
 
           </div>
@@ -1999,8 +2001,11 @@
       }
     }
 
-    // 100% Ad-Free Pure Audio Engine
-    const cloudAudio = document.getElementById("cloud-audio-player");
+    // Load YouTube API script asynchronously
+    const ytScriptTag = document.createElement('script');
+    ytScriptTag.src = "https://www.youtube.com/iframe_api";
+    const firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(ytScriptTag, firstScript);
 
     // 3. POPULATE DROPDOWNS DYNAMICALLY
     function populateDropdowns() {
@@ -2220,10 +2225,10 @@
                   <span class="w-0.5 bg-white rounded-full eq-bar-2"></span>
                   <span class="w-0.5 bg-white rounded-full eq-bar-3"></span>
                 </div>
-                <span>Streaming Audio</span>
+                <span>Streaming Master</span>
               ` : `
                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                <span>Stream Song (Ad-Free)</span>
+                <span>Stream Master Track</span>
               `}
             </button>
             <button 
@@ -2273,12 +2278,11 @@
       nowPlayingBar.classList.remove('translate-y-full');
       playerTitle.textContent = song.title;
       playerArtist.textContent = `${song.singer} • ${song.actor || 'Classic'} (${song.year})`;
-      playerToggleLabel.textContent = 'Pause';
+      playerToggleLabel.textContent = 'Playing...';
       
       cassetteSongLabel.textContent = song.title;
       cassetteArtistLabel.textContent = `${song.singer} • ${song.year}`;
 
-      // Start spinning vinyl & cassette reels
       const vinyl = document.getElementById('vinyl-disc');
       if (vinyl) vinyl.classList.remove('paused');
       tapeWheelLeft.classList.remove('paused');
@@ -2286,80 +2290,40 @@
 
       isPlaying = true;
 
-      // 100% Ad-Free Studio Audio Streams (SoundHelix / Open CDN Audio Streams)
-      const audioStreams = [
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
-        "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
-      ];
-      const selectedStream = audioStreams[(song.id || 1) % audioStreams.length];
-
-      if (cloudAudio) {
-        cloudAudio.src = selectedStream;
-        cloudAudio.playbackRate = playbackSpeed;
-        cloudAudio.play().then(() => {
-          startProgressTracker();
-        }).catch(err => {
-          startSynthesizedAudio(song);
-        });
-      } else {
-        startSynthesizedAudio(song);
+      // Play original studio audio stream
+      if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+        if (song.ytId) {
+          ytPlayer.loadVideoById({
+            videoId: song.ytId,
+            startSeconds: 0
+          });
+        } else {
+          const query = song.ytQuery || `${song.title} ${song.singer} official audio`;
+          ytPlayer.loadPlaylist({
+            listType: 'search',
+            list: query,
+            index: 0,
+            startSeconds: 0
+          });
+        }
+        ytPlayer.playVideo();
+        if (playbackSpeed !== 1.0 && typeof ytPlayer.setPlaybackRate === 'function') {
+          ytPlayer.setPlaybackRate(playbackSpeed);
+        }
       }
 
       startVisualizer();
+      startProgressTracker();
       if (isTanpuraOn) startTanpuraDrone();
       render();
-    }
-
-    function startSynthesizedAudio(song) {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      if (window.activeAudioTimer) clearTimeout(window.activeAudioTimer);
-
-      const baseFreq = 220 + ((song.year % 12) * 20);
-      const notes = [baseFreq, baseFreq * 1.25, baseFreq * 1.5, baseFreq * 1.875, baseFreq * 2];
-      
-      let step = 0;
-      const playStep = () => {
-        if (!isPlaying || currentPlayingTrackId !== song.id) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = (currentEqPreset === 'bass') ? 'sawtooth' : 'triangle';
-        osc.frequency.setValueAtTime(notes[step % notes.length], audioCtx.currentTime);
-        
-        const gainVal = (currentEqPreset === 'bass') ? 0.08 : 0.10;
-        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (0.45 / playbackSpeed));
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + (0.45 / playbackSpeed));
-
-        step++;
-        window.activeAudioTimer = setTimeout(playStep, Math.floor(320 / playbackSpeed));
-      };
-
-      playStep();
-      startProgressTracker();
     }
 
     function startProgressTracker() {
       if (streamTimer) clearInterval(streamTimer);
       streamTimer = setInterval(() => {
-        if (!isPlaying) return;
-        let cur = 0;
-        let dur = 30;
-
-        if (cloudAudio && !isNaN(cloudAudio.duration) && cloudAudio.duration > 0) {
-          cur = cloudAudio.currentTime;
-          dur = cloudAudio.duration;
-        } else {
-          currentSeconds = (currentSeconds || 0) + 1;
-          cur = currentSeconds;
-          dur = 30;
-        }
+        if (!isPlaying || !ytPlayer || typeof ytPlayer.getCurrentTime !== 'function') return;
+        const cur = ytPlayer.getCurrentTime() || 0;
+        const dur = ytPlayer.getDuration() || 1;
         
         const pct = Math.min(100, (cur / dur) * 100);
         playerProgress.value = pct;
@@ -2371,15 +2335,6 @@
         const durMins = Math.floor(dur / 60);
         const durSecs = Math.floor(dur % 60);
         playerDuration.textContent = `${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
-
-        if (cur >= dur) {
-          if (repeatMode === 'one') {
-            if (cloudAudio) cloudAudio.currentTime = 0;
-            currentSeconds = 0;
-          } else {
-            playNextTrack();
-          }
-        }
       }, 500);
     }
 
@@ -2406,8 +2361,8 @@
     }
 
     function stopAudio() {
-      if (cloudAudio) {
-        cloudAudio.pause();
+      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        ytPlayer.pauseVideo();
       }
       if (window.activeAudioTimer) clearTimeout(window.activeAudioTimer);
       if (streamTimer) clearInterval(streamTimer);
@@ -2587,7 +2542,9 @@
 
     playbackSpeedSelect.addEventListener('change', (e) => {
       playbackSpeed = parseFloat(e.target.value);
-      if (cloudAudio) cloudAudio.playbackRate = playbackSpeed;
+      if (ytPlayer && typeof ytPlayer.setPlaybackRate === 'function') {
+        ytPlayer.setPlaybackRate(playbackSpeed);
+      }
     });
 
     moodPills.addEventListener('click', (e) => {
@@ -2746,8 +2703,9 @@
       if (isPlaying) {
         stopAudio();
       } else if (currentPlayingTrackId) {
-        const song = songs.find(s => s.id === currentPlayingTrackId);
-        if (song) streamTrackAudio(song);
+        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+          ytPlayer.playVideo();
+        }
       } else {
         const currentList = getFilteredSongs();
         if (currentList.length > 0) streamTrackAudio(currentList[0]);
@@ -2756,10 +2714,11 @@
     });
 
     playerProgress.addEventListener('input', (e) => {
-      const dur = (cloudAudio && !isNaN(cloudAudio.duration) && cloudAudio.duration > 0) ? cloudAudio.duration : 30;
-      const targetSec = (e.target.value / 100) * dur;
-      if (cloudAudio) cloudAudio.currentTime = targetSec;
-      currentSeconds = targetSec;
+      if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+        const dur = ytPlayer.getDuration() || 1;
+        const targetSec = (e.target.value / 100) * dur;
+        ytPlayer.seekTo(targetSec, true);
+      }
     });
 
     soundEqSelect.addEventListener('change', (e) => {
